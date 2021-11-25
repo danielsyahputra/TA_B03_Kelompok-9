@@ -40,7 +40,6 @@ public class UserController {
         model.addAttribute("listRole", listRole);
         model.addAttribute("message", "");
         return "form-add-user";
-
     }
 
     @PostMapping(value="/add")
