@@ -49,4 +49,11 @@ public class UserController {
         model.addAttribute("message", "");
         return "redirect:/";
     }
+
+    @GetMapping(value = "/viewall")
+    public String viewAllUser(Model model) {
+        List<UserModel> listUser = userService.getListUser();
+        model.addAttribute("listUser", listUser);
+        return "viewall-user";
+    }
 }
