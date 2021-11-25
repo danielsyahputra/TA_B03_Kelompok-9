@@ -8,48 +8,49 @@
 </head>
 
 <body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
 
-div class="container">
-<div class="card m-4 p-4">
-    <div class="card-body">
-        <div class="justify-content-center">
-            <h2>Tambah User</h2>
-            <br>
-            <form th:action="@{/user/add}" th:object="${user}" method="POST">
-
-                <div th:if="${message != null}">
-                    <span style="color : #3675B8">[[${message}]]</span>
-                </div>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Tambah User</h2>
                 <br>
+                <form th:action="@{/user/add}" th:object="${user}" method="POST">
 
-                <label>Username</label>
-                <input type="text" name="username" class="form-control">
+                    <div th:if="${message != null}">
+                        <span style="color : #3675B8">[[${message}]]</span>
+                    </div>
+                    <br>
 
-                <label>Nama</label>
-                <input type="text" name="nama" class="form-control">
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control">
 
-                <label>Email</label>
-                <input type="email" name="email" class="form-control">
+                    <label>Nama</label>
+                    <input type="text" name="nama" class="form-control">
 
-                <label>Password</label>
-                <input type="password" name="password" class="form-control">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control">
 
-                <label>Role</label>
-                <select name="role" class="form-control">
-                    <option selected value="">--pilih role--</option>
-                    <option th:each="role : ${listRole}"
-                            th:value="${role.id}"
-                            th:text="${role.role}">
-                    </option>
-                </select>
-                <br>
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <a class="btn btn-primary" href="/">Home</a>
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control">
 
-            </form>
+                    <label>Role</label>
+                    <select name="role" class="form-control">
+                        <option selected value="">--pilih role--</option>
+                        <option th:each="role : ${listRole}"
+                                th:value="${role.id}"
+                                th:text="${role.role}">
+                        </option>
+                    </select>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a class="btn btn-primary" href="/">Home</a>
+
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 </body>
