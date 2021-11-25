@@ -17,6 +17,10 @@
         <h2 th:text="'Hello ' + ${#httpServletRequest.remoteUser} + '!'">Masuk sebagai</h2>
         <br>
         <h2>Selamat datang di SI Retail!</h2>
+        <br>
+        <div class="my-3 d-flex justify-content-center">
+            <a th:href="@{/user/add}" class="mx-2 btn btn-outline-primary">Tambah User</a>
+        </div>
 
     </div>
 </div>
