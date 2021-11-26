@@ -60,12 +60,59 @@ public class UserController {
         return "redirect:/user/add";
     }
 
-
-
     @GetMapping(value = "/viewall")
     public String viewAllUser(Model model) {
         List<UserModel> listUser = userService.getListUser();
         model.addAttribute("listUser", listUser);
         return "viewall-user";
     }
+
+    @GetMapping("/changeuser/{usernameUser}")
+    public String changeUser(
+            @PathVariable String usernameUser,
+            Model model
+    ){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserModel userSession = userService.findUserbyUsername(auth.getName());
+        UserModel userDiubah = userService.findUserbyUsername(usernameUser);
+
+        UserModel user = new UserModel();
+        List<RoleModel> listRole = roleService.getListRole();
+
+        if (userSession.getRole().getRole().equals("Kepala Retail")) {
+            model.addAttribute("user", userDiubah);
+            model.addAttribute("listRole", listRole);
+            model.addAttribute("kepalaRetail", 1);
+            return "form-change-user";
+        }
+
+        else if (userSession.getRole().getRole().equals("Manager Cabang")) {
+
+            if (userDiubah.getRole().getRole().equals("Kepala Retail")) {
+                return "redirect:/";
+            }
+
+            else {
+                model.addAttribute("user", userDiubah);
+                model.addAttribute("listRole", listRole);
+                model.addAttribute("kepalaRetail", 0);
+                return "form-change-user";
+            }
+        }
+
+        else {
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/changeuser")
+    public String changeUserSubmitPage(
+            @ModelAttribute UserModel user,
+            Model model
+    ){
+        UserModel updatedUser = userService.changeUser(user);
+        model.addAttribute("user", updatedUser);
+        return "view-berhasil-change-user";
+    }
+
 }
