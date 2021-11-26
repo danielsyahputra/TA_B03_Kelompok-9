@@ -26,6 +26,8 @@
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Peran</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -39,6 +41,11 @@
                                 <td>
                                     <a class="btn btn-danger" th:href="@{/user/delete/} + ${user.username}">
                                         Delete
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" th:href="@{/user/changeuser/} + ${user.username}">
+                                        Ubah
                                     </a>
                                 </td>
                             </tr>
