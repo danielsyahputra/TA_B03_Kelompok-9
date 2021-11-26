@@ -21,6 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
+                .antMatchers("/user/add").hasAuthority("Kepala Retail")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -28,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login").permitAll();
+
     }
 
     @Autowired
