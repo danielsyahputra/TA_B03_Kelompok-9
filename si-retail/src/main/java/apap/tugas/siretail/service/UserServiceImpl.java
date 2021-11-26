@@ -30,6 +30,12 @@ public class UserServiceImpl implements UserService{
         return passwordHash;
     }
 
+
+    @Override
+    public UserModel findUserbyUsername(String username){
+        return userDb.findByUsername(username);
+    }
+
     @Override
     public List<UserModel> getListUser() {
         return userDb.findAll();

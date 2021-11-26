@@ -18,9 +18,8 @@
                 <br>
                 <form th:action="@{/user/add}" th:object="${user}" method="POST">
 
-                    <div th:if="${message != null}">
-                        <span style="color : #3675B8">[[${message}]]</span>
-                    </div>
+                    <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success != null}"></div>
+                    <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error != null}"></div>
                     <br>
 
                     <label>Username</label>
