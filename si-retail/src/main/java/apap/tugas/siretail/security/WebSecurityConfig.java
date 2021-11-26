@@ -30,23 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login").permitAll();
     }
 
-//    @Bean
-//    public BCryptPasswordEncoder encoder(){ return new BCryptPasswordEncoder(); }
-//
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-//        auth.inMemoryAuthentication()
-//                .passwordEncoder(encoder())
-//                .withUser("tirta").password(encoder().encode("toronto")).roles("STAFF CABANG");
-//    }
-
     @Autowired
     private UserDetailsService userDetailsService;
-//
-//    @Autowired
-//    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
-//    }
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception{

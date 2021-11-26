@@ -8,22 +8,21 @@
 </head>
 
 <body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
 
-<nav th:replace="fragments/fragment :: navbar"></nav>
-
-<div class="d-flex justify-content-center">
-    <div class="m-4">
-
-        <h2 th:text="'Hello ' + ${#httpServletRequest.remoteUser} + '!'">Masuk sebagai</h2>
-        <br>
-        <h2>Selamat datang di SI Retail!</h2>
-        <br>
-        <div class="my-3 d-flex justify-content-center">
-            <a th:href="@{/user/add}" class="mx-2 btn btn-outline-primary">Tambah User</a>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="row justify-content-center">
+                <div class="text-center">
+                    <h1 class="">Sistem Informasi Retail</h1>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="my-3 d-flex justify-content-center">
+                <a th:href="@{/user/add}" class="mx-2 btn btn-lg btn-outline-primary">Tambah User</a>
+                <a th:href="@{/user/viewall}" class="mx-2 btn btn-lg btn-outline-primary">List User</a>
+            </div>
         </div>
-
     </div>
-</div>
-
 </body>
 </html>
