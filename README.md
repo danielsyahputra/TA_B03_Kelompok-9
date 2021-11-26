@@ -20,17 +20,17 @@
 
 | NPM | Nama Lengkap | Fitur yang akan diselesaikan  |
 | ----------| --- | ---------- | 
-| 1906398793 | Daniel Syahputra Purba | 8, 10 |
+| 1906398793 | Daniel Syahputra Purba | 7, 10 |
 | 1906353624 | Muhammad Naufal Nabiel | 18 |
-| 1906399700 | Gilang Matahati Bangun | 7, 13 |
-| 1906298790 | Ayesha Thalia Kanaya Putri | 9, 16 |
+| 1906399700 | Gilang Matahati Bangun | 13 |
+| 1906298790 | Ayesha Thalia Kanaya Putri | 16 |
 
 **Kontrak Tahap 3 Tugas Akhir**
 
 | NPM | Nama Lengkap | Fitur yang akan diselesaikan  |
 | ----------| --- | ---------- | 
-| 1906398793 | Daniel Syahputra Purba | 12 |
-| 1906353624 | Muhammad Naufal Nabiel | 13 |
-| 1906399700 | Gilang Matahati Bangun | 15, 17 |
-| 1906298790 | Ayesha Thalia Kanaya Putri | 11, 14 |
+| 1906398793 | Daniel Syahputra Purba | 12, 15 |
+| 1906353624 | Muhammad Naufal Nabiel | 8, 14 |
+| 1906399700 | Gilang Matahati Bangun | 13, 11 |
+| 1906298790 | Ayesha Thalia Kanaya Putri | 9, 17 |
 ---
