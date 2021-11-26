@@ -10,9 +10,9 @@
 
 | NPM | Nama Lengkap | Fitur yang akan diselesaikan  |
 | ----------| --- | ---------- | 
-| 1906398793 | Daniel Syahputra Purba | 5, 6 |
+| 1906398793 | Daniel Syahputra Purba | 1, 5 |
 | 1906353624 | Muhammad Naufal Nabiel | 4 |
-| 1906399700 | Gilang Matahati Bangun | 1 |
+| 1906399700 | Gilang Matahati Bangun | 6 |
 | 1906298790 | Ayesha Thalia Kanaya Putri | 2, 3 |
 ---
 
