@@ -110,4 +110,12 @@ public class UserController {
         model.addAttribute("user", updatedUser);
         return "view-berhasil-change-user";
     }
+
+    @GetMapping("/delete/{username}")
+    public String deleteUser(@PathVariable String username, Model model, RedirectAttributes redirAttrs) {
+        UserModel user = userService.findUserbyUsername(username);
+        userService.deleteUser(user);
+        redirAttrs.addFlashAttribute("delete", "User berhasil dihapus");
+        return "redirect:/user/viewall";
+    }
 }
