@@ -21,6 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
+                .antMatchers("/user/add").hasAuthority("Kepala Retail")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -24,10 +24,36 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public UserModel changeUser(UserModel user) {
+        UserModel userLama = userDb.findById(user.getId());
+        userDb.delete(userLama);
+
+        String pass = encrypt(user.getPassword());
+        user.setPassword(pass);
+        return userDb.save(user);
+    }
+
+    @Override
+    public void deleteUser(UserModel user) {
+        userDb.delete(user);
+    }
+
+    @Override
     public String encrypt(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String passwordHash = passwordEncoder.encode(password);
         return passwordHash;
+    }
+
+
+    @Override
+    public UserModel findUserbyUsername(String username){
+        return userDb.findByUsername(username);
+    }
+
+    @Override
+    public UserModel findUserbyId(String id) {
+        return userDb.findById(id);
     }
 
     @Override

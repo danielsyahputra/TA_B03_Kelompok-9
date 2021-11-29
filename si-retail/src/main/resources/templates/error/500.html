@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,5 +7,21 @@
 </head>
 <body>
 
+=======
+<html lang="en" xlmns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div class="container-fluid">
+        <h2>Error pada server, tunggu dalam beberapa saat.</h2>
+        <h2>Silahkan mencoba log-out dan log-in kembali.</h2>
+        <a th:href="">Kembali ke home</a>
+    </div>
+>>>>>>> 1880a838cb7c45e624b66d40dff16baee03a9c09
 </body>
 </html>
