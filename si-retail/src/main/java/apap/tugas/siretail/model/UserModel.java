@@ -13,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -52,4 +53,9 @@ public class UserModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private RoleModel role;
+
+    @OneToMany(mappedBy = "penanggungJawab", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private List<CabangModel> listCabang;
 }
