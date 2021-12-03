@@ -26,11 +26,6 @@ public class CabangModel {
     private Integer id;
 
     @NotNull
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String uuid;
-
-    @NotNull
     @Size(max = 30)
     @Column(name = "nama", nullable = false)
     private String nama;
