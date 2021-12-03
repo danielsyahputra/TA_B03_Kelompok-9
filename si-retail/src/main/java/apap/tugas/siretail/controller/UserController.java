@@ -3,21 +3,17 @@ package apap.tugas.siretail.controller;
 import apap.tugas.siretail.repository.UserDb;
 import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.model.RoleModel;
-import apap.tugas.siretail.repository.RoleDb;
 import apap.tugas.siretail.service.UserService;
 import apap.tugas.siretail.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -115,4 +111,11 @@ public class UserController {
         return "view-berhasil-change-user";
     }
 
+    @GetMapping("/delete/{username}")
+    public String deleteUser(@PathVariable String username, Model model, RedirectAttributes redirAttrs) {
+        UserModel user = userService.findUserbyUsername(username);
+        userService.deleteUser(user);
+        redirAttrs.addFlashAttribute("delete", "User berhasil dihapus");
+        return "redirect:/user/viewall";
+    }
 }
