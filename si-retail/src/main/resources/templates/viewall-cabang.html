@@ -1,10 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>List Cabang</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
-<body>
 
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+
+
+<div class="container">
+
+    <div th:if="${message != null}">
+        <span style="color : #3675B8">[[${message}]]</span>
+    </div>
+    <div class="alert alert-primary" role="alert" th:text="${delete}" th:if="${delete != null}"></div>
+
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>List Cabang</h2>
+                <br>
+                <div th:if="*{listCabang.size() != 0}">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Id Cabang</th>
+                                <th>Nama</th>
+                                <th>Nomor Telepon</th>
+                                <th>Ukuran</th>
+                                <th>Jumlah Item</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cabang, iterationStatus : ${listCabang}"
+                                th:style="${iterationStatus.even} ? 'background-color:#eeeeee;'">
+                                <td th:text="${iterationStatus.count}"></td>
+                                <td th:text="${cabang.id}"></td>
+                                <td th:text="${cabang.nama}"></td>
+                                <td th:text="${cabang.noTelepon}"></td>
+                                <td th:text="${cabang.ukuran}"></td>
+                                <td th:text="${cabang.jumlahItem}"></td>
+                                <td>
+                                    <a class="btn btn-danger" th:href="@{/}">
+                                        Delete
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" th:href="@{/}">
+                                        Ubah
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a class="btn btn-primary" th:href="@{/}">
+                            Tambah Cabang
+                        </a>
+                        <a class="btn btn-primary" th:href="@{/}">Home</a>
+                    </div>
+                </div>
+                <div th:unless="*{listCabang.size() != 0}">
+                    <h2 th:text="'Tidak ada User'"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package apap.tugas.siretail.controller;
 
+import apap.tugas.siretail.additional.CabangDetail;
 import apap.tugas.siretail.model.CabangModel;
 import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.service.CabangService;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/cabang")
@@ -36,5 +39,12 @@ public class CabangController {
         cabangService.addCabang(cabang);
         model.addAttribute("namaCabang", cabang.getNama());
         return "add-cabang-success";
+    }
+
+    @GetMapping("/viewall")
+    public String viewAllCabang(Model model) {
+        List<CabangDetail> listCabang = cabangService.getListCabang();
+        model.addAttribute("listCabang", listCabang);
+        return "viewall-cabang";
     }
 }

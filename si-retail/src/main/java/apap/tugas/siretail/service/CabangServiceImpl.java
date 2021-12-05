@@ -1,6 +1,8 @@
 package apap.tugas.siretail.service;
 
+import apap.tugas.siretail.additional.CabangDetail;
 import apap.tugas.siretail.model.CabangModel;
+import apap.tugas.siretail.model.RoleModel;
 import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.repository.CabangDb;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,10 +30,27 @@ public class CabangServiceImpl implements CabangService{
     }
 
     @Override
-    public List<CabangModel> getListCabang() {
+    public List<CabangDetail> getListCabang() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserModel authenticatedUser = userService.findUserbyUsername(auth.getName());
-        String userRole = authenticatedUser.getRole().getRole();
-        return null;
+        RoleModel userRole = authenticatedUser.getRole();
+        List<CabangModel> listCabang = new ArrayList<>();
+        if (userRole.getRole().equals("Manager Cabang")) {
+            listCabang = cabangDb.findAllByPenanggungJawabRole(userRole);
+        } else {
+            listCabang = cabangDb.findAll();
+        }
+        List<CabangDetail> returnedListCabang = new ArrayList<>();
+        for (CabangModel cabang : listCabang) {
+            Integer id = cabang.getId();
+            String nama = cabang.getNama();
+            String noTelepon = cabang.getNomorTelepon();
+            Integer ukuran = cabang.getUkuran();
+            Integer jumlahItem = cabang.getListItem().size();
+            Integer status = cabang.getStatus();
+            CabangDetail detail = new CabangDetail(id, nama, noTelepon, ukuran, jumlahItem, status);
+            returnedListCabang.add(detail);
+        }
+        return returnedListCabang;
     }
 }
