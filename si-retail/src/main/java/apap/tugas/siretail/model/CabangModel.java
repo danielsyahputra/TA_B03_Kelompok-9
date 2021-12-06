@@ -13,6 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -53,4 +54,9 @@ public class CabangModel {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private UserModel penanggungJawab;
+
+    @OneToMany(mappedBy = "cabang", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private List<ItemCabangModel> listItem;
 }

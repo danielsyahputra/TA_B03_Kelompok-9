@@ -23,6 +23,7 @@
                 <a th:if="${user.getRole().getRole() == 'Kepala Retail'}" th:href="@{/user/add}" class="mx-2 btn btn-outline-primary">Tambah User</a>
                 <a th:href="@{/user/viewall}" class="mx-2 btn btn-outline-primary">List User</a>
                 <a th:unless="${user.getRole().getRole() == 'Staff Cabang'}" th:href="@{/cabang/add}" class="mx-2 btn btn-outline-primary">Buat Cabang</a>
+                <a th:href="@{/cabang/viewall}" class="mx-2 btn btn-outline-primary">List Cabang</a>
             </div>
         </div>
     </div>
