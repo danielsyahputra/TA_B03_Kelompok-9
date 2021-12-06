@@ -42,8 +42,10 @@ public class CabangController {
     }
 
     @GetMapping("/viewall")
-    public String viewAllCabang(Model model) {
+    public String viewAllCabang(Authentication auth, Model model) {
+        UserModel authUser = userService.findUserbyUsername(auth.getName());
         List<CabangDetail> listCabang = cabangService.getListCabang();
+        model.addAttribute("user", authUser);
         model.addAttribute("listCabang", listCabang);
         return "viewall-cabang";
     }

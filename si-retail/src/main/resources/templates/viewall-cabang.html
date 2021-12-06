@@ -35,7 +35,7 @@
                                 <th>Ukuran</th>
                                 <th>Jumlah Item</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th th:if="${user.role.role} != 'Staff Cabang'">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -47,12 +47,16 @@
                                 <td th:text="${cabang.noTelepon}"></td>
                                 <td th:text="${cabang.ukuran}"></td>
                                 <td th:text="${cabang.jumlahItem}"></td>
-                                <td>
+                                <td th:if="${cabang.status} == 0">Menunggu Persetujuan</td>
+                                <td th:if="${cabang.status} == 1">Ditolak</td>
+                                <td th:if="${cabang.status} == 2">Disetujui</td>
+                                <td th:if="${user.role.role} != 'Staff Cabang'">
+                                    <a class="btn btn-success" th:href="@{/}">
+                                        Detail
+                                    </a>
                                     <a class="btn btn-danger" th:href="@{/}">
                                         Delete
                                     </a>
-                                </td>
-                                <td>
                                     <a class="btn btn-primary" th:href="@{/}">
                                         Ubah
                                     </a>
@@ -60,14 +64,14 @@
                             </tr>
                             </tbody>
                         </table>
-                        <a class="btn btn-primary" th:href="@{/}">
+                        <a th:if="${user.role.role} != 'Staff Cabang'" class="btn btn-primary" th:href="@{/}">
                             Tambah Cabang
                         </a>
                         <a class="btn btn-primary" th:href="@{/}">Home</a>
                     </div>
                 </div>
                 <div th:unless="*{listCabang.size() != 0}">
-                    <h2 th:text="'Tidak ada User'"></h2>
+                    <h2 th:text="'Tidak ada cabang'"></h2>
                 </div>
             </div>
         </div>
