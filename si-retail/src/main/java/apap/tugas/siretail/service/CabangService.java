@@ -10,4 +10,5 @@ import java.util.List;
 public interface CabangService {
     CabangModel addCabang(CabangModel cabang);
     List<CabangDetail> getListCabang();
+    CabangModel getCabangById(Integer idCabang);
 }

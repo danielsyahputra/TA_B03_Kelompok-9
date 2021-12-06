@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -52,5 +53,12 @@ public class CabangServiceImpl implements CabangService{
             returnedListCabang.add(detail);
         }
         return returnedListCabang;
+    }
+
+    @Override
+    public CabangModel getCabangById(Integer idCabang) {
+        Optional<CabangModel> cabang = cabangDb.findById(idCabang);
+        if (cabang.isPresent()) return cabang.get();
+        return null;
     }
 }
