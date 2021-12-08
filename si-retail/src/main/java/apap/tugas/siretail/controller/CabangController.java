@@ -53,4 +53,31 @@ public class CabangController {
         model.addAttribute("cabang", cabang);
         return "detail-cabang";
     }
+
+    @GetMapping("/{idCabang}/ubah")
+    public String updateAgensiFormPage(
+            @PathVariable Integer idCabang,
+            Model model
+    ){
+
+        CabangModel cabang = cabangService.getCabangById(idCabang);
+        UserModel PJCabang = cabang.getPenanggungJawab();
+        model.addAttribute("PJCabang", PJCabang);
+        model.addAttribute("cabang", cabang);
+        return "form-ubah-cabang";
+    }
+
+    @PostMapping("/ubah")
+    public String ubahCabangSubmitPage(
+            @ModelAttribute CabangModel cabang,
+            Model model
+    ){
+//        UserModel userCabang = cabang.getPenanggungJawab();
+//        String userNameCabang = userCabang.getUsername();
+//        UserModel authenticatedUser = userService.findUserbyUsername(userNameCabang);
+//        cabang.setPenanggungJawab(authenticatedUser);
+        cabangService.ubahCabang(cabang);
+        model.addAttribute("namaCabang", cabang.getNama());
+        return "ubah-cabang-success";
+    }
 }

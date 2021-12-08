@@ -61,4 +61,9 @@ public class CabangServiceImpl implements CabangService{
         if (cabang.isPresent()) return cabang.get();
         return null;
     }
+
+    @Override
+    public CabangModel ubahCabang(CabangModel cabang) {
+        return cabangDb.save(cabang);
+    }
 }
