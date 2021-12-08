@@ -29,7 +29,6 @@ public class CabangRestServiceImpl implements CabangRestService{
     @Autowired
     private CabangDb cabangDb;
 
-    @Autowired
     private UserService userService;
 
     @Override
