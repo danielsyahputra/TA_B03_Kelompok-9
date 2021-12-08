@@ -23,9 +23,9 @@
                         <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success != null}"></div>
                         <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error != null}"></div>
                         <br>
-
-                        <input type="hidden" name="status" class="form-control" th:value="${cabang.status}"/>
-                        <input type="hidden" name="penanggungJawab" th:value="*{penanggungJawab}" />
+                        <input type="hidden" th:field="*{id}" />
+                        <input type="hidden" name="status" class="form-control" th:field="${cabang.status}"/>
+                        <input type="hidden" name="penanggungJawab" th:field="*{penanggungJawab.id}"/>
 
                         <label>Nama Cabang</label>
                         <input type="text" name="nama" class="form-control" th:value="${cabang.nama}">
