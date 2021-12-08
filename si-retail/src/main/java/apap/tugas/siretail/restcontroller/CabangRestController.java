@@ -2,7 +2,9 @@ package apap.tugas.siretail.restcontroller;
 
 import apap.tugas.siretail.model.CabangModel;
 import apap.tugas.siretail.repository.CabangDb;
+import apap.tugas.siretail.rest.AlamatDetail;
 import apap.tugas.siretail.rest.CabangDetail;
+import apap.tugas.siretail.service.CabangRestService;
 import apap.tugas.siretail.service.CabangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,9 @@ public class CabangRestController {
     @Autowired
     private CabangService cabangService;
 
+    @Autowired
+    private CabangRestService cabangRestService;
+
     @PostMapping(value="/cabang")
     private CabangModel createCabang(@Valid @RequestBody CabangModel cabang, BindingResult bindingResult){
         if(bindingResult.hasFieldErrors()){
@@ -32,5 +37,10 @@ public class CabangRestController {
         } else {
             return cabangService.addCabang(cabang);
         }
+    }
+
+    @GetMapping(value="/cabang/list-alamat")
+    private List<AlamatDetail> getListAlamat(){
+        return cabangRestService.getListAlamat();
     }
 }

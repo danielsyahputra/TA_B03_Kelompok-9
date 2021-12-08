@@ -17,7 +17,6 @@
                 <h2>Tambah User</h2>
                 <br>
                 <form th:action="@{/user/add}" th:object="${user}" method="POST">
-
                     <div th:if="${message != null}">
                         <span style="color : #3675B8">[[${message}]]</span>
                     </div>
