@@ -7,6 +7,8 @@ import apap.tugas.siretail.service.CabangService;
 import apap.tugas.siretail.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,12 +51,17 @@ public class CabangController {
 
     @GetMapping("/{idCabang}")
     public String detailCabang(@PathVariable Integer idCabang, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        UserModel userModel = userService.findUserbyUsername(username);
+        model.addAttribute("user", userModel);
         CabangModel cabang = cabangService.getCabangById(idCabang);
         model.addAttribute("cabang", cabang);
         return "detail-cabang";
     }
 
-    @GetMapping("/{idCabang}/ubah")
+    @GetMapping("ubah/{idCabang}")
     public String updateAgensiFormPage(
             @PathVariable Integer idCabang,
             Model model
