@@ -53,4 +53,17 @@ public class CabangController {
         model.addAttribute("cabang", cabang);
         return "detail-cabang";
     }
+
+    @GetMapping("/delete/{idCabang}")
+    public String deleteCabang(@PathVariable Integer idCabang, Model model){
+        CabangModel cabangToDelete = cabangService.getCabangById(idCabang);
+
+        if(cabangToDelete.getStatus() == 0 || cabangToDelete.getStatus() == 1){
+            cabangService.deleteCabangById(idCabang);
+            model.addAttribute("idCabang", idCabang);
+            return "delete-cabang-success";
+        } else {
+            return "delete-cabang-not-allowed";
+        }
+    }
 }

@@ -61,4 +61,19 @@ public class CabangServiceImpl implements CabangService{
         if (cabang.isPresent()) return cabang.get();
         return null;
     }
+
+    @Override
+    public void deleteCabangById(Integer idCabang) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserModel authenticatedUser = userService.findUserbyUsername(auth.getName());
+        RoleModel userRole = authenticatedUser.getRole();
+
+        CabangModel toDelete = getCabangById(idCabang);
+
+        if(userRole.getRole().equals("Manager Cabang") || userRole.getRole().equals("Kepala Retail")){
+            if(toDelete.getStatus() == 0 || toDelete.getStatus()==1){
+                cabangDb.delete(toDelete);
+            }
+        }
+    }
 }
