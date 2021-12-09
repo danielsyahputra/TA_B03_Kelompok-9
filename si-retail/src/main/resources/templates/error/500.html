@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xlmns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
@@ -11,7 +11,8 @@
     <div class="container-fluid">
         <h2>Error pada server, tunggu dalam beberapa saat.</h2>
         <h2>Silahkan mencoba log-out dan log-in kembali.</h2>
-        <a th:href="">Kembali ke home</a>
+        <a th:href="@{/}">Kembali ke home</a>
+
     </div>
 </body>
 </html>
