@@ -23,11 +23,15 @@
             <div class="justify-content-center">
                 <h2 th:text="'Cabang ID ' + ${cabang.id}"></h2>
                 <br>
-                <p th:text="${cabang.nama}"></p>
-                <p th:text="${cabang.nomorTelepon}"></p>
-                <p th:text="${cabang.ukuran}"></p>
+                <p th:text="'Nama: ' + ${cabang.nama}"></p>
+                <p th:text="'No Telepon: ' + ${cabang.nomorTelepon}"></p>
+                <p th:text="'Alamat: ' + ${cabang.alamat}"></p>
+                <p th:text="'Ukuran: ' + ${cabang.ukuran} +'m^2'"></p>
             </div>
-            <a class="btn btn-primary" th:href="@{/cabang/} + ${cabang.id}">
+            <a class="btn btn-primary" th:if="${user.getRole().getRole() == 'Kepala Retail'}" th:href="@{/cabang/ubah/} + ${cabang.id}">
+                Ubah
+            </a>
+            <a class="btn btn-primary" th:if="${user.getRole().getRole() == 'Manager Cabang'}" th:href="@{/cabang/ubah/} + ${cabang.id}">
                 Ubah
             </a>
             <a class="btn btn-primary" th:href="@{/cabang/viewall}">Kembali</a>
