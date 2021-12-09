@@ -1,5 +1,6 @@
 package apap.tugas.siretail.rest;
 
+import apap.tugas.siretail.model.CabangModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -11,10 +12,20 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class CabangDetail {
-    private Integer id;
     private String nama;
     private String alamat;
-    private String ukuran;
-    private Integer status;
-    private String no_telp;
+    private Integer ukuran;
+    private String nomorTelepon;
+
+    public CabangModel convertToCabangModel(){
+        CabangModel newCabang = new CabangModel();
+
+        newCabang.setNama(nama);
+        newCabang.setAlamat(alamat);
+        newCabang.setUkuran(ukuran);
+        newCabang.setNomorTelepon(nomorTelepon);
+        newCabang.setStatus(0);
+        newCabang.setPenanggungJawab(null);
+        return newCabang;
+    }
 }

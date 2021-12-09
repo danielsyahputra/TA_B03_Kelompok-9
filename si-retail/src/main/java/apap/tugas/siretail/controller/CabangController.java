@@ -4,6 +4,7 @@ import apap.tugas.siretail.additional.CabangDetail;
 import apap.tugas.siretail.model.CabangModel;
 import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.service.CabangService;
+import apap.tugas.siretail.service.ItemCabangService;
 import apap.tugas.siretail.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,6 +24,9 @@ public class CabangController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ItemCabangService itemCabangService;
 
     @GetMapping("/add")
     public String addCabangFormPage(Model model) {
@@ -65,7 +69,7 @@ public class CabangController {
     public String updateAgensiFormPage(
             @PathVariable Integer idCabang,
             Model model
-    ){
+    ) {
 
         CabangModel cabang = cabangService.getCabangById(idCabang);
         model.addAttribute("cabang", cabang);
@@ -76,10 +80,26 @@ public class CabangController {
     public String ubahCabangSubmitPage(
             @ModelAttribute CabangModel cabang,
             Model model
-    ){
+    ) {
 
         cabangService.ubahCabang(cabang);
         model.addAttribute("namaCabang", cabang.getNama());
         return "ubah-cabang-success";
+    }
+
+    @GetMapping("/delete/{idCabang}")
+    public String deleteCabang(@PathVariable Integer idCabang, Model model) {
+        CabangModel cabangToDelete = cabangService.getCabangById(idCabang);
+
+        if (cabangToDelete.getStatus() == 0 || cabangToDelete.getListItem().size() == 0) {
+            if (cabangToDelete.getStatus() == 0 || cabangToDelete.getStatus() == 1) {
+                cabangService.deleteCabangById(idCabang);
+                model.addAttribute("idCabang", idCabang);
+                return "delete-cabang-success";
+            } else {
+                return "delete-cabang-not-allowed";
+            }
+        }
+        return "";
     }
 }

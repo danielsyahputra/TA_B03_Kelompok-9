@@ -20,15 +20,13 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserModel addUser(UserModel user) {
         String pass = encrypt(user.getPassword());
+        System.out.println(pass + " " + user.getPassword());
         user.setPassword(pass);
         return userDb.save(user);
     }
 
     @Override
     public UserModel changeUser(UserModel user) {
-        UserModel userLama = userDb.findById(user.getId());
-        userDb.delete(userLama);
-
         String pass = encrypt(user.getPassword());
         user.setPassword(pass);
         return userDb.save(user);
