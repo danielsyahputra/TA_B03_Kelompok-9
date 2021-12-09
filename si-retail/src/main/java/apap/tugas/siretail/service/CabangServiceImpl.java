@@ -71,7 +71,7 @@ public class CabangServiceImpl implements CabangService{
         CabangModel toDelete = getCabangById(idCabang);
 
         if(userRole.getRole().equals("Manager Cabang") || userRole.getRole().equals("Kepala Retail")){
-            if(toDelete.getStatus() == 0 || toDelete.getStatus()==1){
+            if(toDelete.getStatus() == 0 || toDelete.getListItem().size() == 0){
                 cabangDb.delete(toDelete);
             }
         }
