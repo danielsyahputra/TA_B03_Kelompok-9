@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,5 +21,10 @@ public class ItemCabangServiceImpl implements ItemCabangService{
         Optional<ItemCabangModel> item = itemCabangDb.findById(idItem);
         if (item.isPresent()) return item.get();
         return null;
+    }
+
+    @Override
+    public List<ItemCabangModel> getListItem() {
+        return itemCabangDb.findAll();
     }
 }

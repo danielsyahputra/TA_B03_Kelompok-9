@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-
+@Transactional
 public class UserServiceImpl implements UserService{
 
     @Autowired
@@ -19,15 +20,13 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserModel addUser(UserModel user) {
         String pass = encrypt(user.getPassword());
+        System.out.println(pass + " " + user.getPassword());
         user.setPassword(pass);
         return userDb.save(user);
     }
 
     @Override
     public UserModel changeUser(UserModel user) {
-        UserModel userLama = userDb.findById(user.getId());
-        userDb.delete(userLama);
-
         String pass = encrypt(user.getPassword());
         user.setPassword(pass);
         return userDb.save(user);

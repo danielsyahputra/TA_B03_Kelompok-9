@@ -29,11 +29,13 @@ public class CabangRestServiceImpl implements CabangRestService{
     @Autowired
     private CabangDb cabangDb;
 
+    @Autowired
     private UserService userService;
 
     @Override
-    public CabangModel createCabang(CabangModel cabang) {
-        return cabangDb.save(cabang);
+    public CabangModel createCabang(CabangDetail cabang) {
+        CabangModel newCabang = cabang.convertToCabangModel();
+        return cabangDb.save(newCabang);
     }
 
     @Override

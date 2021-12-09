@@ -11,4 +11,6 @@ public interface CabangService {
     CabangModel addCabang(CabangModel cabang);
     List<CabangDetail> getListCabang();
     CabangModel getCabangById(Integer idCabang);
+    CabangModel ubahCabang(CabangModel cabang);
+    void deleteCabangById(Integer idCabang);
 }

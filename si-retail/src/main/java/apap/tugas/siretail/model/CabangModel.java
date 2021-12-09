@@ -50,7 +50,7 @@ public class CabangModel {
     private Integer status;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_penanggung_jawab", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_penanggung_jawab", referencedColumnName = "id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private UserModel penanggungJawab;
