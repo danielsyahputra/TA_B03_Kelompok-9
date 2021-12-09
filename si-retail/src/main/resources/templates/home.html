@@ -19,7 +19,6 @@
             </div>
             <hr class="my-4">
             <div class="my-3 d-flex justify-content-center">
-                <a th:href="@{/user/add}" class="mx-2 btn btn-outline-primary">Tambah User</a>
                 <a th:if="${user.getRole().getRole() == 'Kepala Retail'}" th:href="@{/user/add}" class="mx-2 btn btn-outline-primary">Tambah User</a>
                 <a th:href="@{/user/viewall}" class="mx-2 btn btn-outline-primary">List User</a>
                 <a th:unless="${user.getRole().getRole() == 'Staff Cabang'}" th:href="@{/cabang/add}" class="mx-2 btn btn-outline-primary">Buat Cabang</a>

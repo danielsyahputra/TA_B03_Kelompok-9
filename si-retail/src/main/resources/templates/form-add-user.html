@@ -24,30 +24,29 @@
                     <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error != null}"></div>
                     <br>
 
-                    <label>Username</label>
-                    <input type="text" name="username" class="form-control">
+                        <label>User Name</label>
+                        <input type = "text" name = "username" class = "form-control"/>
 
-                    <label>Nama</label>
-                    <input type="text" name="nama" class="form-control">
+                        <label>Nama</label>
+                        <input type = "text" name = "nama" class = "form-control"/>
 
-                    <label>Email</label>
-                    <input type="email" name="email" class="form-control">
+                        <label>Email</label>
+                        <input type = "email" name = "email" class = "form-control"/>
 
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control">
+                        <label>Password</label>
+                        <input type = "password" name = "password" class = "form-control" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" placeholder="c." title="Password wajib mengandung angka, huruf besar, huruf kecil, dan simbol, serta terdiri dari minimal 8 karakter."/>
 
-                    <label>Role</label>
-                    <select name="role" class="form-control">
-                        <option selected value="">--pilih role--</option>
-                        <option th:each="role : ${listRole}"
-                                th:value="${role.id}"
-                                th:text="${role.role}">
-                        </option>
-                    </select>
-                    <br>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a class="btn btn-primary" th:href="@{/}">Home</a>
-
+                        <label>Role</label>
+                        <select name = "role" class = "form-control">
+                            <option selected value = "">--pilih role--</option>
+                            <option th:each = "role : ${listRole}"
+                                    th:value = "${role.id}"
+                                    th:text = "${role.role}">
+                            </option>
+                        </select>
+                        <br>
+                        <button type = "submit" class = "btn btn-primary">Simpan</button>
+                        <a class = "btn btn-primary" href = "/">Home</a>
                 </form>
             </div>
         </div>
