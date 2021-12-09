@@ -25,6 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api-docs").permitAll()
                 .antMatchers("/v3/api-docs/**").permitAll()
                 .antMatchers("/user/add").hasAuthority("Kepala Retail")
+                .antMatchers("/user/changeuser/**").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .antMatchers("/cabang/add").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .antMatchers("/cabang/ubah").hasAnyAuthority("Kepala Retail", "Manager Cabang")
                 .anyRequest().authenticated()
@@ -33,8 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login").permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login").permitAll()
-        ;
+                .logoutSuccessUrl("/login").permitAll();
     }
 
     @Autowired

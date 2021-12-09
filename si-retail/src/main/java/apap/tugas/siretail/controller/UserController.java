@@ -40,9 +40,9 @@ public class UserController {
 
     @PostMapping(value="/add")
     public String addUserSubmit(@ModelAttribute UserModel user, Model model, RedirectAttributes redirAttrs) {
-        UserModel foundUser = userDb.findByEmail(user.getEmail());
+        UserModel foundUser = userDb.findByEmailOrUsername(user.getEmail(), user.getUsername());
         if (foundUser != null) {
-            redirAttrs.addFlashAttribute("error", "Email sudah digunakan.");
+            redirAttrs.addFlashAttribute("error", "Email atau Username sudah digunakan.");
             redirAttrs.addFlashAttribute("success", null);
             return "redirect:/user/add";
         }
@@ -61,41 +61,32 @@ public class UserController {
     }
 
     @GetMapping("/changeuser/{usernameUser}")
-    public String changeUser(
+    public String changeUser(Authentication auth,
             @PathVariable String usernameUser,
-            Model model
+            Model model, RedirectAttributes redirAttrs
     ){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserModel userSession = userService.findUserbyUsername(auth.getName());
         UserModel userDiubah = userService.findUserbyUsername(usernameUser);
-
-        UserModel user = new UserModel();
         List<RoleModel> listRole = roleService.getListRole();
-
         if (userSession.getRole().getRole().equals("Kepala Retail")) {
             model.addAttribute("user", userDiubah);
             model.addAttribute("listRole", listRole);
             model.addAttribute("kepalaRetail", 1);
             return "form-change-user";
         }
-
-        else if (userSession.getRole().getRole().equals("Manager Cabang")) {
-
+        if (userSession.getRole().getRole().equals("Manager Cabang")) {
             if (userDiubah.getRole().getRole().equals("Kepala Retail")) {
-                return "redirect:/";
-            }
-
-            else {
+                redirAttrs.addFlashAttribute("error", "Anda tidak bisa mengubah data Kepala Retail");
+                redirAttrs.addFlashAttribute("success", null);
+                return "redirect:/user/viewall";
+            } else {
                 model.addAttribute("user", userDiubah);
                 model.addAttribute("listRole", listRole);
                 model.addAttribute("kepalaRetail", 0);
                 return "form-change-user";
             }
         }
-
-        else {
-            return "redirect:/";
-        }
+        return "redirect:/";
     }
 
     @PostMapping("/changeuser")
