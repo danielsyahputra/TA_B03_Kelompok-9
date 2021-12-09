@@ -66,7 +66,11 @@ public class CabangServiceImpl implements CabangService{
     public CabangModel ubahCabang(CabangModel cabang) {
         return cabangDb.save(cabang);
     }
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 2c897a4edf016629cf2488498951277458b3b935
     public void deleteCabangById(Integer idCabang) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserModel authenticatedUser = userService.findUserbyUsername(auth.getName());

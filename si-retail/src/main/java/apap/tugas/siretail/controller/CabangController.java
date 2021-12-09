@@ -85,8 +85,12 @@ public class CabangController {
         cabangService.ubahCabang(cabang);
         model.addAttribute("namaCabang", cabang.getNama());
         return "ubah-cabang-success";
+<<<<<<< HEAD
     }
 
+=======
+      
+>>>>>>> 2c897a4edf016629cf2488498951277458b3b935
     @GetMapping("/delete/{idCabang}")
     public String deleteCabang(@PathVariable Integer idCabang, Model model) {
         CabangModel cabangToDelete = cabangService.getCabangById(idCabang);
@@ -100,6 +104,9 @@ public class CabangController {
                 return "delete-cabang-not-allowed";
             }
         }
+<<<<<<< HEAD
         return "";
+=======
+>>>>>>> 2c897a4edf016629cf2488498951277458b3b935
     }
 }
