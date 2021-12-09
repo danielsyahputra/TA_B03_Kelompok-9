@@ -68,7 +68,7 @@ public class CabangRestController {
     private BaseResponse<List<AlamatDetail>>  getListAlamat() {
         BaseResponse<List<AlamatDetail>> response = new BaseResponse<>();
         response.setStatus(200);
-        response.setMessage("success");
+        response.setMessage("Success");
         response.setResult(cabangRestService.getListAlamat());
         return response;
     }
