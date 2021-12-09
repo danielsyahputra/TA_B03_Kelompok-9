@@ -7,6 +7,6 @@ import apap.tugas.siretail.rest.CabangDetail;
 import java.util.List;
 
 public interface CabangRestService {
-    CabangModel createCabang(CabangModel cabang);
+    CabangModel createCabang(CabangDetail cabang);
     List<AlamatDetail> getListAlamat();
 }

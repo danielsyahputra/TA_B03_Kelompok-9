@@ -92,6 +92,7 @@ public class CabangController {
     public String deleteCabang(@PathVariable Integer idCabang, Model model){
         CabangModel cabangToDelete = cabangService.getCabangById(idCabang);
 
+        if(cabangToDelete.getStatus() == 0 || cabangToDelete.getListItem().size() == 0){
         if(cabangToDelete.getStatus() == 0 || cabangToDelete.getStatus() == 1){
             cabangService.deleteCabangById(idCabang);
             model.addAttribute("idCabang", idCabang);
