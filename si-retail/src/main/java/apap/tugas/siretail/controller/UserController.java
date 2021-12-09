@@ -40,19 +40,16 @@ public class UserController {
 
     @PostMapping(value="/add")
     public String addUserSubmit(@ModelAttribute UserModel user, Model model, RedirectAttributes redirAttrs) {
-        List<UserModel> listUser = userService.getListUser();
-        for (UserModel x : listUser){
-            if(x.getEmail().equals(user.getEmail())){
-                redirAttrs.addFlashAttribute("error", "Email sudah digunakan.");
-                redirAttrs.addFlashAttribute("success", null);
-                return "redirect:/user/add";
-            }else {
-                userService.addUser(user);
-                model.addAttribute("user", user);
-                redirAttrs.addFlashAttribute("success", "User berhasil ditambahkan.");
-                redirAttrs.addFlashAttribute("error", null);
-            }
+        UserModel foundUser = userDb.findByEmail(user.getEmail());
+        if (foundUser != null) {
+            redirAttrs.addFlashAttribute("error", "Email sudah digunakan.");
+            redirAttrs.addFlashAttribute("success", null);
+            return "redirect:/user/add";
         }
+        userService.addUser(user);
+        model.addAttribute("user", user);
+        redirAttrs.addFlashAttribute("success", "User berhasil ditambahkan.");
+        redirAttrs.addFlashAttribute("error", null);
         return "redirect:/user/add";
     }
 
