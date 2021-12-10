@@ -65,7 +65,11 @@ public class CabangRestController {
 //    }
 
     @GetMapping(value="/cabang/list-alamat")
-    private List<AlamatDetail> getListAlamat(){
-        return cabangRestService.getListAlamat();
+    private BaseResponse<List<AlamatDetail>>  getListAlamat() {
+        BaseResponse<List<AlamatDetail>> response = new BaseResponse<>();
+        response.setStatus(200);
+        response.setMessage("Success");
+        response.setResult(cabangRestService.getListAlamat());
+        return response;
+        }
     }
-}
