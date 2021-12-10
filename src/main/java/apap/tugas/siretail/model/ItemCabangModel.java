@@ -42,7 +42,6 @@ public class ItemCabangModel implements Serializable {
     @Column(name = "kategori", nullable = false)
     private String kategori;
 
-    @NotNull
     @Column(name = "id_promo", nullable = false)
     private Integer idPromo;
 
