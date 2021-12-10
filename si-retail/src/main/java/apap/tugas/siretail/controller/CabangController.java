@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -80,12 +81,12 @@ public class CabangController {
     @PostMapping("/ubah")
     public String ubahCabangSubmitPage(
             @ModelAttribute CabangModel cabang,
-            Model model
+            RedirectAttributes redirAttrs
     ) {
-
         cabangService.ubahCabang(cabang);
-        model.addAttribute("namaCabang", cabang.getNama());
-        return "ubah-cabang-success";
+        redirAttrs.addFlashAttribute("success", String.format("Cabang dengan id %d berhasil diubah", cabang.getId()));
+        redirAttrs.addFlashAttribute("error", null);
+        return "redirect:/cabang/viewall";
     }
 
     @GetMapping("/delete/{idCabang}")
