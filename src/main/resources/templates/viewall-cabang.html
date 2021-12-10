@@ -37,7 +37,7 @@
                                 <th>Ukuran</th>
                                 <th>Jumlah Item</th>
                                 <th>Status</th>
-                                <th th:if="${user.role.role} != 'Staff Cabang'">Action</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -52,7 +52,7 @@
                                 <td th:if="${cabang.status} == 0">Menunggu Persetujuan</td>
                                 <td th:if="${cabang.status} == 1">Ditolak</td>
                                 <td th:if="${cabang.status} == 2">Disetujui</td>
-                                <td th:if="${user.role.role} != 'Staff Cabang'">
+                                <td>
                                     <a class="btn btn-success" th:href="@{/cabang/} + ${cabang.id}">
                                         Detail
                                     </a>

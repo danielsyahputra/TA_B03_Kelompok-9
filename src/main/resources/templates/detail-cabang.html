@@ -38,7 +38,7 @@
                                 <th>Id Item</th>
                                 <th>Nama</th>
                                 <th>Harga</th>
-                                <th>Action</th>
+                                <th th:if="${user.role.role != 'Staff Cabang'}">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,7 +48,7 @@
                             <td th:text="${item.id}"></td>
                             <td th:text="${item.nama}"></td>
                             <td id="item-harga" th:text="${item.harga}"></td>
-                            <td>
+                            <td th:if="${user.role.role != 'Staff Cabang'}">
                                 <button class="btn btn-success button-kupon" type="button">Terapkan Kupon</button>
                             </td>
                         </tr>
@@ -93,7 +93,7 @@
         let jumlahDiskon = kupon.discountAmount;
         const HTMLText = `
             <div class="card-body">
-                ${kodeKupon} <span style="color: red">(${jumlahDiskon}%)</span>
+                ${kodeKupon} <span style="color: red">(${jumlahDiskon}$)</span>
                 <button class="btn btn-success" id="btn-kupon-${id}">Tambahkan</button>
             </div>
         `
