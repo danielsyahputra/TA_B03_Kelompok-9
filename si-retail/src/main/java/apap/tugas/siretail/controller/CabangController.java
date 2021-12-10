@@ -103,4 +103,27 @@ public class CabangController {
         }
         return "";
     }
+
+    @GetMapping("addItem/{idCabang}")
+    public String addItemCabangFormPage(
+            @PathVariable Integer idCabang,
+            Model model
+    ) {
+
+        CabangModel cabang = cabangService.getCabangById(idCabang);
+        model.addAttribute("cabang", cabang);
+        return "form-add-item";
+    }
+
+    @PostMapping("/addItem")
+    public String addItemCabangSubmitPage(
+            @ModelAttribute CabangModel cabang,
+            Model model
+    ) {
+
+        cabangService.ubahCabang(cabang);
+        model.addAttribute("namaCabang", cabang.getNama());
+        return "add-item-success";
+    }
+
 }

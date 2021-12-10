@@ -22,7 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .antMatchers("/api/**").permitAll()
+//                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api*").permitAll()
                 .antMatchers("/api-docs").permitAll()
                 .antMatchers("/v3/api-docs/**").permitAll()
                 .antMatchers("/user/add").hasAuthority("Kepala Retail")
@@ -40,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception{
-        web.ignoring().antMatchers("/api/**");
+//        web.ignoring().antMatchers("/api/**");
     }
 
     @Autowired

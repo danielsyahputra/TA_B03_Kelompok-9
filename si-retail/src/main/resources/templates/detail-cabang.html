@@ -60,6 +60,8 @@
                 Ubah
             </a>
             <a class="btn btn-primary" th:href="@{/cabang/viewall}">Kembali</a>
+<!--            <a class="btn btn-primary" th:href="@{/cabang/addItem}">Tambah Item</a>-->
+            <button class="btn btn-success button-item" type="button">Tambah Item</button>
         </div>
         <div class="card" id="kupon-container"></div>
     </div>
@@ -116,6 +118,7 @@
             type: "GET",
             beforeSend: () => {
                 console.log("AMBIL DATA");
+                console.log(APILink);
             },
             success: response => {
                 loadData(response, idItem);
@@ -131,6 +134,72 @@
             getKupon(id)
         })
     })
+
+    const tambahkanItem = (item) => {
+        const buttonTambah = $(`#btn-item-${item.id}`)
+        buttonTambah.click(() => {
+            $.ajax({
+                url: APILink,
+                type: "GET",
+                beforeSend: () => {
+                console.log("AMBIL DATA");
+            },
+            success: response => {
+                loadDataItem(response);
+            }
+            })
+
+        })
+    }
+
+    const loadItem = (item) => {
+        console.log(item);
+        let uuid = item.uuid;
+        let nama = item.nama;
+        let harga = item.harga;
+        let stok = item.stok;
+        let kategori = item.kategori;
+        const HTMLText = `
+            <div class="card-body">
+                ${nama} <span style="color: red">(Rp.${harga})</span> <br>
+                Stok: ${stok} <br>
+                Kategori: ${kategori} <br>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="jumlah Item" aria-label="Jumlah Item yang ingin ditambahkan" aria-describedby="button-addon2">
+                    <button class="btn btn-success" type="button" id="btn-item-${uuid}">Tambahkan Item</button>
+                </div>
+            </div>
+        `
+        $("#kupon-container").append(HTMLText);
+        tambahkanItem(item);
+    }
+
+    const loadDataItem = (response) => {
+        const res = JSON.parse(response);
+        const items = res.result;
+        items.forEach(item => {
+            console.log(item);
+            loadItem(item);
+        })
+    }
+
+    const getItem = () => {
+        let APILink = location.origin + "/api/v1/getAllItem";
+        $.ajax({
+            url: APILink,
+            type: "GET",
+            beforeSend: () => {
+                console.log("AMBIL DATA");
+            },
+            success: response => {
+                loadDataItem(response);
+            }
+        })
+    }
+
+    const terapkanButtons2 = document.querySelectorAll(".button-item");
+    terapkanButtons2.onclick = getItem();
+
 </script>
 </body>
 </html>
