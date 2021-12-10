@@ -47,9 +47,9 @@
                             <td th:text="${iterationStatus.count}"></td>
                             <td th:text="${item.id}"></td>
                             <td th:text="${item.nama}"></td>
-                            <td id="item-harga" th:text="${item.harga}"></td>
+                            <td th:text="${item.harga}"></td>
                             <td th:if="${user.role.role != 'Staff Cabang'}">
-                                <button class="btn btn-success button-kupon" type="button">Terapkan Kupon</button>
+                                <button th:if="${!punyaKupon[__${iterationStatus.index}__]}" class="btn btn-success button-kupon" type="button">Terapkan Kupon</button>
                             </td>
                         </tr>
                         </tbody>
@@ -71,16 +71,20 @@
     const tambahkanKupon = (kupon, idItem) => {
         const buttonTambah = $(`#btn-kupon-${kupon.idCoupon}`)
         buttonTambah.click(() => {
-            let APILink = location.origin + `/api/v1/item/${idItem}/${kupon.discountAmount}`
+            let APILink = location.origin + `/api/v1/item/${idItem}`
             $.ajax({
                 url: APILink,
-                type: "GET",
+                type: "PUT",
+                data: {
+                    "jumlahDiskon": kupon.discountAmount,
+                    "idPromo": kupon.idCoupon
+                },
                 beforeSend: () => {
                     console.log("MENGIRIM");
                 },
                 success: response => {
-                    $("#item-harga").html(response.harga);
                     alert("Berhasil menambahkan diskon!");
+                    location.reload();
                 }
             })
         })

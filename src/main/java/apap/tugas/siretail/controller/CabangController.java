@@ -2,6 +2,7 @@ package apap.tugas.siretail.controller;
 
 import apap.tugas.siretail.additional.CabangDetail;
 import apap.tugas.siretail.model.CabangModel;
+import apap.tugas.siretail.model.ItemCabangModel;
 import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.service.CabangService;
 import apap.tugas.siretail.service.ItemCabangService;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -62,8 +64,18 @@ public class CabangController {
         UserModel userModel = userService.findUserbyUsername(username);
         model.addAttribute("user", userModel);
         CabangModel cabang = cabangService.getCabangById(idCabang);
+        List<ItemCabangModel> listItem = itemCabangService.getListItem();
+        List<Boolean> punyaKuponApaEngga = new ArrayList<>();
+        for (int i = 0; i < listItem.size(); i++) {
+            if (listItem.get(i).getIdPromo() == null) {
+                punyaKuponApaEngga.add(false);
+            }else {
+                punyaKuponApaEngga.add(true);
+            }
+        }
         model.addAttribute("cabang", cabang);
-        model.addAttribute("listItem", itemCabangService.getListItem());
+        model.addAttribute("listItem", listItem);
+        model.addAttribute("punyaKupon", punyaKuponApaEngga);
         return "detail-cabang";
     }
 

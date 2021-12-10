@@ -15,9 +15,11 @@ public class ItemCabangRestController {
     @Autowired
     private ItemCabangDb itemCabangDb;
 
-    @GetMapping(value = "/item/{idItem}/{jumlahDiskon}")
-    private ItemCabangModel terapkanPromo(@PathVariable Integer jumlahDiskon, @PathVariable Long idItem) {
+    @PutMapping(value = "/item/{idItem}")
+    private ItemCabangModel terapkanPromo(@PathVariable Long idItem, @RequestParam(name = "jumlahDiskon") Integer jumlahDiskon,
+                                          @RequestParam(name = "idPromo") Integer idPromo) {
         ItemCabangModel item = itemCabangService.getItemByIdItem(idItem);
+        item.setIdPromo(idPromo);
         item.setHarga(item.getHarga() - jumlahDiskon);
         return itemCabangDb.save(item);
     }
