@@ -1,4 +1,7 @@
 # Tugas Akhir
+
+[URL: ](https://si-retail-b09.herokuapp.com/)
+
 ## Authors
 * **Daniel Syahputra Purba** - *1906398793* - *B*
 * **Muhammad Naufal Nabiel** - *1906353624* - *B*
