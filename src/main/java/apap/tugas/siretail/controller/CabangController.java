@@ -104,4 +104,33 @@ public class CabangController {
         }
         return "";
     }
+
+    @GetMapping("/menunggukonfirmasi")
+    public String viewAllMenungguKonfirmasi(Authentication auth, Model model){
+        UserModel authUser = userService.findUserbyUsername(auth.getName());
+        List<CabangDetail> menungguKonfirmasi = cabangService.getListCabangMenungguKonfirmasi();
+
+        model.addAttribute("user", authUser);
+        model.addAttribute("menungguKonfirmasi", menungguKonfirmasi);
+        return "viewall-menunggukonfirmasi";
+
+    }
+
+    @GetMapping("/menyetujui/{idCabang}")
+    public String menyetujuiCabang(@PathVariable Integer idCabang, Model model){
+        CabangModel cabangToAccept = cabangService.getCabangById(idCabang);
+        cabangService.acceptCabang(idCabang);
+
+        model.addAttribute("namaCabang", cabangToAccept.getNama());
+        return "accept-cabang-success";
+    }
+
+    @GetMapping("menolak/{idCabang}")
+    public String menolakCabang(@PathVariable Integer idCabang, Model model){
+        CabangModel cabangToDecline = cabangService.getCabangById(idCabang);
+        cabangService.declineCabang(idCabang);
+
+        model.addAttribute("namaCabang", cabangToDecline.getNama());
+        return "decline-cabang-success";
+    }
 }

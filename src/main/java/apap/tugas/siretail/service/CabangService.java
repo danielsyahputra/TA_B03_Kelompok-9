@@ -13,4 +13,7 @@ public interface CabangService {
     CabangModel getCabangById(Integer idCabang);
     CabangModel ubahCabang(CabangModel cabang);
     void deleteCabangById(Integer idCabang);
+    List<CabangDetail> getListCabangMenungguKonfirmasi();
+    void acceptCabang(Integer idCabang);
+    void declineCabang(Integer idCabang);
 }
