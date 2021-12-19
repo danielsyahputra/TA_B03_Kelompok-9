@@ -2,31 +2,33 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: materializecss" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: title (current='Home')" th:remove="tag"></object>
 </head>
 
 <body>
-    <nav th:replace="fragments/fragment :: navbar"></nav>
-
+    <div th:replace="fragments/fragment2 :: navbar"></div>
     <div class="container">
-        <div class="jumbotron">
-            <div class="row justify-content-center">
-                <div class="text-center">
-                    <h1 class="">Sistem Informasi Retail</h1>
-                </div>
+        <div class="card-panel">
+            <div class="card-panel indigo">
+                <h2 class="center-align white-text">Welcome to SI-Retail!</h2>
             </div>
-            <hr class="my-4">
-            <div class="my-3 d-flex justify-content-center">
-                <a th:if="${user.getRole().getRole() == 'Kepala Retail'}" th:href="@{/user/add}" class="mx-2 btn btn-outline-primary">Tambah User</a>
-                <a th:href="@{/user/viewall}" class="mx-2 btn btn-outline-primary">List User</a>
-                <a th:unless="${user.getRole().getRole() == 'Staff Cabang'}" th:href="@{/cabang/add}" class="mx-2 btn btn-outline-primary">Buat Cabang</a>
-                <a th:href="@{/cabang/viewall}" class="mx-2 btn btn-outline-primary">List Cabang</a>
-                <a th:if="${user.getRole().getRole() == 'Kepala Retail'}" th:href="@{/cabang/menunggukonfirmasi}" class="mx-2 btn btn-outline-primary">
-                    List Cabang Menunggu Konfirmasi</a>
+            <br>
+            <h5 class="center-align grey-text">List of Features:</h5>
+            <div class="center-align">
+                <a th:href="@{/user/viewall}" class="waves-effect waves-light btn-large indigo">
+                    <i class="material-icons left">person</i>User
+                </a>
+                <a th:href="@{/cabang/viewall}" class="waves-effect waves-light btn-large indigo">
+                    <i class="material-icons left">business</i>
+                    Cabang
+                </a>
             </div>
         </div>
     </div>
+
+    <object th:include="fragments/fragment2 :: materializejs" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: tambahan" th:remove="tag"></object>
 </body>
 </html>
