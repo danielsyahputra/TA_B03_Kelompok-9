@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <head th:fragment="js">
+        <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    </head>
+
+    <head th:fragment="materializecss">
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+
+    <head th:fragment="title">
+        <title th:text="'SI-Retail' + ' | ' + ${current}"></title>
+    </head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+    <div th:fragment="navbar">
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a th:href="@{/logout}">Keluar</a></li>
+        </ul>
+        <div class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper indigo">
+                    <div class="container">
+                        <a th:href="@{/}" class="brand-logo">SI-Retail</a>
+                        <ul class="right hide-on-med-and-down">
+                            <li th:classappend="${#request.requestURI.contains('/user') ? 'active':''}">
+                                <a th:href="@{/user/viewall}"><i class="material-icons left">person</i>User</a>
+                            </li>
+                            <li th:classappend="${#request.requestURI.contains('/cabang') ? 'active':''}">
+                                <a th:href="@{/cabang/viewall}"><i class="material-icons left">business</i>Cabang</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-trigger" data-target="dropdown1">
+                                    Pengguna
+                                    <i class="material-icons right">arrow_drop_down</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <body th:fragment="materializejs">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </body>
+    <body th:fragment="tambahan">
+        <script th:fragment="tambahan">
+            $(document).ready(function(){
+                $(".dropdown-trigger").dropdown();
+            });
+        </script>
+    </body>
+</body>
+</html>
