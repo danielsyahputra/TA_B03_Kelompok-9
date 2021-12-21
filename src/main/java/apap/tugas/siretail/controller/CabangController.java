@@ -70,8 +70,20 @@ public class CabangController {
         UserModel userModel = userService.findUserbyUsername(username);
         model.addAttribute("user", userModel);
         CabangModel cabang = cabangService.getCabangById(idCabang);
+
         List<ItemCabangModel> listItem = itemCabangService.getListItem();
+        List<ItemCabangModel> filteredListItem = new ArrayList<>();
         List<Boolean> punyaKuponApaEngga = new ArrayList<>();
+
+        for (ItemCabangModel item : listItem) {
+            if (item.getCabang() != null) {
+                if (item.getCabang().equals(cabang)) {
+                    filteredListItem.add(item);
+                }
+            }
+        }
+        listItem = filteredListItem;
+
         for (int i = 0; i < listItem.size(); i++) {
             if (listItem.get(i).getIdPromo() == null) {
                 punyaKuponApaEngga.add(false);
@@ -184,7 +196,7 @@ public class CabangController {
             Integer stok = listStok.get(a);
             String kategori = listKategori.get(a);
 
-            System.out.println(itemCabangService.createItemCabangModel(uuid, nama, harga, stok, kategori).getNama());
+            itemCabangService.createItemCabangModel(uuid, nama, harga, stok, kategori);
         }
 
         CabangModel cabang = cabangService.getCabangById(idCabang);
@@ -193,9 +205,6 @@ public class CabangController {
         model.addAttribute("cabang", cabang);
         model.addAttribute("listItem", listItem);
 
-        for (String uuid : listUUID) {
-            System.out.println(uuid);
-        }
         for (String nama : listNama) {
             System.out.println(nama);
         }

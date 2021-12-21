@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>GET All Item and ADD Items</title>
+    <title>Tambah Item</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -14,6 +14,7 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
+                <h2 th:text="${cabang.nama}"></h2>
                 <h2>Add Item From The Table</h2>
                 <br>
                 <form th:action="@{/cabang/getItem}" th:object="${cabang}" method="POST">
@@ -32,13 +33,12 @@
                     <input type="hidden" name="nomorTelepon" th:field="*{nomorTelepon}"/>
                     <input type="hidden" name="ukuran" th:field="*{ukuran}"/>
 
-                    <label>List Item</label>
+                    <label>List Item yang Tersedia</label>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                             <tr>
                                 <th>No</th>
-                                <th>UUID</th>
                                 <th>Nama</th>
                                 <th>Harga</th>
                                 <th>Stok</th>
@@ -50,25 +50,22 @@
                             <tr th:each="item, iterationStatus : ${listItem}"
                                 th:style="${iterationStatus.even} ? 'background-color:#eeeeee;'">
                                 <td th:text="${iterationStatus.count}"></td>
-                                <td th:text="${item.uuid}"></td>
                                 <td th:text="${item.nama}"></td>
                                 <td th:text="${item.harga}"></td>
                                 <td th:text="${item.stok}"></td>
                                 <td th:text="${item.kategori}"></td>
-                            </tr>
-
-                            <tr>
-
+                                <td>
+                                    <input class="form-check-input" type="checkbox"S
+                                           th:field="*{listItem}" th:value="${item.id}"
+                                           id="flexCheckDefault">
+                                </td>
                             </tr>
                             </tbody>
                         </table>
-                        <a class="btn btn-primary" th:href="@{location.origin + '/api/v1/getAllItem'}">
-                            Tambah Item ke Cabang
-                        </a>
                     </div>
 
                     <br>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary">Tambahkan Item</button>
                     <a class="btn btn-primary" th:href="@{/}">Home</a>
 
                 </form>
