@@ -82,4 +82,56 @@ public class CabangServiceImpl implements CabangService{
             }
         }
     }
+
+    @Override
+    public List<CabangDetail> getListCabangMenungguKonfirmasi() {
+        List<CabangModel> listCabang = new ArrayList<>();
+        List<CabangDetail> menungguKonfirmasi = new ArrayList<>();
+
+        listCabang = cabangDb.findAll();
+
+        for(CabangModel cabang : listCabang){
+            if(cabang.getStatus() == 0){
+                Integer id = cabang.getId();
+                String nama = cabang.getNama();
+                String noTelepon = cabang.getNomorTelepon();
+                Integer ukuran = cabang.getUkuran();
+                Integer jumlahItem = cabang.getListItem().size();
+                Integer status = cabang.getStatus();
+                CabangDetail detail = new CabangDetail(id, nama, noTelepon, ukuran, jumlahItem, status);
+
+                menungguKonfirmasi.add(detail);
+            }
+        }
+
+        return menungguKonfirmasi;
+    }
+
+    @Override
+    public void acceptCabang(Integer idCabang) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserModel authenticatedUser = userService.findUserbyUsername(auth.getName());
+        RoleModel userRole = authenticatedUser.getRole();
+
+        CabangModel toAccept = getCabangById(idCabang);
+
+        if(userRole.getRole().equals("Kepala Retail")){
+            toAccept.setStatus(2);
+            toAccept.setPenanggungJawab(authenticatedUser);
+            cabangDb.save(toAccept);
+        }
+    }
+
+    @Override
+    public void declineCabang(Integer idCabang) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserModel authenticatedUser = userService.findUserbyUsername(auth.getName());
+        RoleModel userRole = authenticatedUser.getRole();
+
+        CabangModel toDecline = getCabangById(idCabang);
+        if(userRole.getRole().equals("Kepala Retail")){
+            toDecline.setStatus(1);
+            cabangDb.save(toDecline);
+        }
+    }
 }

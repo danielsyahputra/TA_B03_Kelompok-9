@@ -51,8 +51,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserModel findUserbyId(String id) {
-        return userDb.findById(id);
+    public boolean userExists(String email, String username) {
+        UserModel user = userDb.findByEmailOrUsername(email, username);
+        if (user != null) return true;
+        return false;
     }
 
     @Override
