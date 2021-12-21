@@ -145,4 +145,18 @@ public class CabangController {
         model.addAttribute("namaCabang", cabangToDecline.getNama());
         return "decline-cabang-success";
     }
+    @GetMapping("tambahstok/{idCabang}")
+    public String tambahStok(@PathVariable Integer idCabang, Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        UserModel userModel = userService.findUserbyUsername(username);
+        model.addAttribute("user", userModel);
+        CabangModel cabang = cabangService.getCabangById(idCabang);
+        List<ItemCabangModel> listItem = itemCabangService.getListItem();
+
+        model.addAttribute("cabang", cabang);
+        model.addAttribute("listItem", listItem);
+     return "tambah-stok";
+    }
 }
