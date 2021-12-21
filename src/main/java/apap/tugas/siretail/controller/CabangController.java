@@ -114,7 +114,7 @@ public class CabangController {
                 return "delete-cabang-not-allowed";
             }
         }
-        return "";
+        return "delete-cabang-not-allowed";
     }
 
     @GetMapping("/menunggukonfirmasi")
