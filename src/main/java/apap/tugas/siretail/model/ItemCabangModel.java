@@ -25,6 +25,10 @@ public class ItemCabangModel implements Serializable {
     private Long id;
 
     @NotNull
+    @Column(name = "uuid", nullable = false)
+    private String uuid;
+
+    @NotNull
     @Size(max = 50)
     @Column(name = "nama", nullable = false)
     private String nama;
@@ -46,7 +50,7 @@ public class ItemCabangModel implements Serializable {
     private Integer idPromo;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_cabang", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_cabang", referencedColumnName = "id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private CabangModel cabang;

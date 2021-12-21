@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>GET All Item and ADD Items</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Add Item From The Table</h2>
+                <br>
+                <form th:action="@{/cabang/getItem}" th:object="${cabang}" method="POST">
+
+                    <div th:if="${message != null}">
+                        <span style="color : #3675B8">[[${message}]]</span>
+                    </div>
+                    <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success != null}"></div>
+                    <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error != null}"></div>
+                    <br>
+                    <input type="hidden" th:field="*{id}" />
+                    <input type="hidden" name="status" class="form-control" th:field="${cabang.status}"/>
+                    <input type="hidden" name="penanggungJawab" th:field="*{penanggungJawab.id}"/>
+                    <input type="hidden" name="nama" th:field="*{nama}"/>
+                    <input type="hidden" name="alamat" th:field="*{alamat}"/>
+                    <input type="hidden" name="nomorTelepon" th:field="*{nomorTelepon}"/>
+                    <input type="hidden" name="ukuran" th:field="*{ukuran}"/>
+
+                    <label>List Item</label>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>UUID</th>
+                                <th>Nama</th>
+                                <th>Harga</th>
+                                <th>Stok</th>
+                                <th>Kategori</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item, iterationStatus : ${listItem}"
+                                th:style="${iterationStatus.even} ? 'background-color:#eeeeee;'">
+                                <td th:text="${iterationStatus.count}"></td>
+                                <td th:text="${item.uuid}"></td>
+                                <td th:text="${item.nama}"></td>
+                                <td th:text="${item.harga}"></td>
+                                <td th:text="${item.stok}"></td>
+                                <td th:text="${item.kategori}"></td>
+                            </tr>
+
+                            <tr>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a class="btn btn-primary" th:href="@{location.origin + '/api/v1/getAllItem'}">
+                            Tambah Item ke Cabang
+                        </a>
+                    </div>
+
+                    <br>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a class="btn btn-primary" th:href="@{/}">Home</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

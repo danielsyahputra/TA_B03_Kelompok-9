@@ -6,7 +6,10 @@ import apap.tugas.siretail.model.ItemCabangModel;
 import apap.tugas.siretail.model.UserModel;
 import apap.tugas.siretail.service.CabangService;
 import apap.tugas.siretail.service.ItemCabangService;
+import apap.tugas.siretail.service.ItemCabangRestService;
 import apap.tugas.siretail.service.UserService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +33,9 @@ public class CabangController {
 
     @Autowired
     private ItemCabangService itemCabangService;
+
+    @Autowired
+    private ItemCabangRestService itemCabangRestService;
 
     @GetMapping("/add")
     public String addCabangFormPage(Model model) {
@@ -84,7 +90,6 @@ public class CabangController {
             @PathVariable Integer idCabang,
             Model model
     ) {
-
         CabangModel cabang = cabangService.getCabangById(idCabang);
         model.addAttribute("cabang", cabang);
         return "form-ubah-cabang";
@@ -144,5 +149,57 @@ public class CabangController {
 
         model.addAttribute("namaCabang", cabangToDecline.getNama());
         return "decline-cabang-success";
+    }
+
+    @GetMapping("getItem/{idCabang}")
+    public String getAllItem(
+            @PathVariable Integer idCabang,
+            Model model
+    ){
+        String listMonoItem = itemCabangRestService.getAllItem().share().block();
+
+        final JSONObject obj = new JSONObject(listMonoItem);
+        final JSONArray listResult = obj.getJSONArray("result");
+
+        List<String> listUUID = new ArrayList<>();
+        List<String> listNama = new ArrayList<>();
+        List<Integer> listHarga = new ArrayList<>();
+        List<Integer> listStok = new ArrayList<>();
+        List<String> listKategori = new ArrayList<>();
+
+        final int n = listResult.length();
+        for (int i = 0; i < n; ++i) {
+            final JSONObject item = listResult.getJSONObject(i);
+            listUUID.add(item.getString("uuid"));
+            listNama.add(item.getString("nama"));
+            listHarga.add(item.getInt("harga"));
+            listStok.add(item.getInt("stok"));
+            listKategori.add(item.getString("kategori"));
+        }
+
+        for (int a = 0; a < listUUID.size(); a++ ) {
+            String uuid = listUUID.get(a);
+            String nama = listNama.get(a);
+            Integer harga = listHarga.get(a);
+            Integer stok = listStok.get(a);
+            String kategori = listKategori.get(a);
+
+            System.out.println(itemCabangService.createItemCabangModel(uuid, nama, harga, stok, kategori).getNama());
+        }
+
+        CabangModel cabang = cabangService.getCabangById(idCabang);
+        List<ItemCabangModel> listItem = itemCabangService.getListItem();
+
+        model.addAttribute("cabang", cabang);
+        model.addAttribute("listItem", listItem);
+
+        for (String uuid : listUUID) {
+            System.out.println(uuid);
+        }
+        for (String nama : listNama) {
+            System.out.println(nama);
+        }
+
+        return "form-get-all-item";
     }
 }

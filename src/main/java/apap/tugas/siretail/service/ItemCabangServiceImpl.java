@@ -15,6 +15,21 @@ public class ItemCabangServiceImpl implements ItemCabangService{
     @Autowired
     private ItemCabangDb itemCabangDb;
 
+    @Override
+    public ItemCabangModel createItemCabangModel(String uuid, String nama, Integer harga, Integer stok, String kategori) {
+        ItemCabangModel suatuItem = new ItemCabangModel();
+
+        suatuItem.setUuid(uuid);
+        suatuItem.setNama(nama);
+        suatuItem.setHarga(harga);
+        suatuItem.setStok(stok);
+        suatuItem.setKategori(kategori);
+        suatuItem.setCabang(null);
+        suatuItem.setIdPromo(0);
+
+        itemCabangDb.save(suatuItem);
+        return suatuItem;
+    }
 
     @Override
     public ItemCabangModel getItemByIdItem(Long idItem) {

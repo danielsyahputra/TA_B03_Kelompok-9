@@ -51,6 +51,9 @@
                             <td th:if="${user.role.role != 'Staff Cabang'}">
                                 <button th:if="${!punyaKupon[__${iterationStatus.index}__]}" class="btn btn-success button-kupon" type="button">Terapkan Kupon</button>
                             </td>
+                            <td>
+                                <button class="btn btn-danger button-kupon" type="button">Hapus Item</button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -58,6 +61,12 @@
             </div>
             <a class="btn btn-primary" th:if="${user.getRole().getRole() == 'Kepala Retail'}" th:href="@{/cabang/ubah/} + ${cabang.id}">
                 Ubah
+            </a>
+            <a class="btn btn-primary" th:if="${user.getRole().getRole() == 'Kepala Retail'}" th:href="@{/cabang/getItem/} + ${cabang.id}">
+                Tambah Item
+            </a>
+            <a class="btn btn-primary" th:if="${user.getRole().getRole() == 'Manager Cabang'}" th:href="@{/cabang/getItem/} + ${cabang.id}">
+                Tambah Item
             </a>
             <a class="btn btn-primary" th:href="@{/cabang/viewall}">Kembali</a>
         </div>
