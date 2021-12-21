@@ -12,5 +12,5 @@ public interface UserService {
     List<UserModel> getListUser();
 
     UserModel findUserbyUsername(String username);
-    UserModel findUserbyId(String id);
+    boolean userExists(String email, String username);
 }

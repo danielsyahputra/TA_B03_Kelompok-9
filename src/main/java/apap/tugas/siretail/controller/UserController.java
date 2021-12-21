@@ -40,8 +40,8 @@ public class UserController {
 
     @PostMapping(value="/add")
     public String addUserSubmit(@ModelAttribute UserModel user, Model model, RedirectAttributes redirAttrs) {
-        UserModel foundUser = userDb.findByEmailOrUsername(user.getEmail(), user.getUsername());
-        if (foundUser != null) {
+        boolean userExists = userService.userExists(user.getEmail(), user.getUsername());
+        if (userExists) {
             redirAttrs.addFlashAttribute("error", "Email atau Username sudah digunakan.");
             redirAttrs.addFlashAttribute("success", null);
             return "redirect:/user/add";
@@ -50,7 +50,7 @@ public class UserController {
         model.addAttribute("user", user);
         redirAttrs.addFlashAttribute("success", "User berhasil ditambahkan.");
         redirAttrs.addFlashAttribute("error", null);
-        return "redirect:/user/add";
+        return "redirect:/user/viewall";
     }
 
     @GetMapping(value = "/viewall")
