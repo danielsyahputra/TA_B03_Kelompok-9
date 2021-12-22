@@ -32,4 +32,5 @@ public class KuponRestServiceImpl implements KuponRestService{
                 .retrieve()
                 .bodyToMono(String.class);
     }
+
 }
