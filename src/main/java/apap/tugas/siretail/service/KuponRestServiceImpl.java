@@ -22,7 +22,7 @@ public class KuponRestServiceImpl implements KuponRestService{
     ItemCabangService itemCabangService;
 
     @Override
-    public void terapkanPromoKeItem(Long idItem) {
+    public void terapkanPromoKeItem(String idItem) {
         ItemCabangModel item = itemCabangService.getItemByIdItem(idItem);
     }
 
