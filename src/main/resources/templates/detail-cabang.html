@@ -16,7 +16,7 @@
         <div class="card-panel green-text text-darken-1" th:text="${success}" th:if="${success != null}"></div>
         <div class="card-panel red-text text-darken-1" th:text="${error}" th:if="${error != null}"></div>
 
-        <div class="card-panel">
+        <div class="card-panel" id="cabang" th:attr="data-id=${cabang.id}">
             <h5 th:text="'Cabang ID ' + ${cabang.id}"></h5>
             <p th:text="'Nama: ' + ${cabang.nama}"></p>
             <p th:text="'No Telepon: ' + ${cabang.nomorTelepon}"></p>
@@ -48,6 +48,7 @@
                         <th>No</th>
                         <th>Id Item</th>
                         <th>Nama</th>
+                        <th>Stok</th>
                         <th>Harga</th>
                         <th th:if="${user.role.role != 'Staff Cabang'}">Action</th>
                     </tr>
@@ -57,6 +58,7 @@
                         <td th:text="${iterationStatus.count}"></td>
                         <td th:text="${item.id}"></td>
                         <td th:text="${item.nama}"></td>
+                        <td th:text="${item.stok}"></td>
                         <td th:text="${item.harga}"></td>
                         <td th:if="${user.role.role != 'Staff Cabang'}">
                             <a th:if="${!punyaKupon[__${iterationStatus.index}__]}"
@@ -167,6 +169,36 @@
             $('.materialboxed').materialbox();
         });
 
+        const tambahkanItem = item => {
+            const buttonTambahItem = $(`#btn-item-${item.uuid}`);
+            const cabangDiv = document.querySelector("#cabang");
+            const idCabang = parseInt(cabangDiv.dataset.id);
+
+            buttonTambahItem.click(() => {
+                let APILink = location.origin + "/api/v1/item";
+                $.ajax({
+                    url: APILink,
+                    type: "POST",
+                    data: JSON.stringify({
+                        "id": item.uuid,
+                        "nama": item.nama,
+                        "harga": item.harga,
+                        "kategori": item.kategori,
+                        "stok": item.stok,
+                        "idCabang": idCabang
+                    }),
+                    contentType: 'application/json',
+                    beforeSend: () => {
+                        $("#loader2").addClass("progress");
+                    },
+                    success: response => {
+                        $("#loader2").removeClass("progress");
+                        location.reload();
+                    }
+                })
+            })
+        }
+
         const loadItem = item => {
             let uuid = item['uuid'];
             let nama = item['nama'];
@@ -185,6 +217,7 @@
                 </li>
             `;
             $("#item-kontainer").append(HTMLText);
+            tambahkanItem(item);
         }
 
         const loadItems = response => {

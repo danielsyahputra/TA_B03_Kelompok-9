@@ -46,7 +46,6 @@ public class ItemCabangRestController {
     private BaseResponse<ItemCabangModel> addItem(
             @RequestBody ItemCabangDetail item) {
         BaseResponse<ItemCabangModel> response = new BaseResponse<>();
-        System.out.println(item.getNama());
         try {
             ItemCabangModel newItem = itemRestService.createItem(item);
             System.out.println(newItem.getNama());
