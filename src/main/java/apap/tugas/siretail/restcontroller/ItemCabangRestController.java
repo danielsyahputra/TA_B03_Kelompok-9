@@ -29,7 +29,7 @@ public class ItemCabangRestController {
     private ItemRestService itemRestService;
 
     @PutMapping(value = "/item/{idItem}")
-    private ItemCabangModel terapkanPromo(@PathVariable Long idItem, @RequestParam(name = "jumlahDiskon") Integer jumlahDiskon,
+    private ItemCabangModel terapkanPromo(@PathVariable String idItem, @RequestParam(name = "jumlahDiskon") Integer jumlahDiskon,
                                           @RequestParam(name = "idPromo") Integer idPromo) {
         ItemCabangModel item = itemCabangService.getItemByIdItem(idItem);
         item.setIdPromo(idPromo);
@@ -52,6 +52,23 @@ public class ItemCabangRestController {
             response.setStatus(201);
             response.setMessage("created");
             response.setResult(newItem);
+        } catch (Exception e) {
+            response.setStatus(400);
+            response.setMessage(e.toString());
+            response.setResult(null);
+        }
+        return response;
+    }
+
+    @DeleteMapping(value = "/item/{id}")
+    private BaseResponse<ItemCabangModel> deleteItem(@PathVariable String id) {
+        BaseResponse<ItemCabangModel> response = new BaseResponse<>();
+        try {
+            ItemCabangModel item = itemCabangService.getItemByIdItem(id);
+            itemCabangService.deleteItem(item);
+            response.setStatus(201);
+            response.setMessage("deleted");
+            response.setResult(item);
         } catch (Exception e) {
             response.setStatus(400);
             response.setMessage(e.toString());

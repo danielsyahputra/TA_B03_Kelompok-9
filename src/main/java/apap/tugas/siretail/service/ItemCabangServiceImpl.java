@@ -17,7 +17,7 @@ public class ItemCabangServiceImpl implements ItemCabangService{
 
 
     @Override
-    public ItemCabangModel getItemByIdItem(Long idItem) {
+    public ItemCabangModel getItemByIdItem(String idItem) {
         Optional<ItemCabangModel> item = itemCabangDb.findById(idItem);
         if (item.isPresent()) return item.get();
         return null;
@@ -26,5 +26,10 @@ public class ItemCabangServiceImpl implements ItemCabangService{
     @Override
     public List<ItemCabangModel> getListItem() {
         return itemCabangDb.findAll();
+    }
+
+    @Override
+    public void deleteItem(ItemCabangModel item) {
+        itemCabangDb.delete(item);
     }
 }
