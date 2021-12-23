@@ -21,8 +21,7 @@ import java.io.Serializable;
 @Table(name = "item_cabang")
 public class ItemCabangModel implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @NotNull
     @Size(max = 50)
@@ -42,7 +41,7 @@ public class ItemCabangModel implements Serializable {
     @Column(name = "kategori", nullable = false)
     private String kategori;
 
-    @Column(name = "id_promo", nullable = false)
+    @Column(name = "id_promo")
     private Integer idPromo;
 
     @ManyToOne(fetch = FetchType.EAGER)
