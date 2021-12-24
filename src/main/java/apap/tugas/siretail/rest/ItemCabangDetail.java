@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ItemCabangDetail {
     private String id;
     private String nama;
-    private Integer harga;
+    private Double harga;
     private Integer stok;
     private String kategori;
     private Integer idCabang;

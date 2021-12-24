@@ -1,71 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>List Cabang Menunggu Konfirmasi</title>
-  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <meta charset="UTF-8">
+    <object th:include="fragments/fragment2 :: materializecss" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: title (current='List Cabang')" th:remove="tag"></object>
 </head>
 
 <body>
-<nav th:replace="fragments/fragment :: navbar"></nav>
+    <div th:replace="fragments/fragment2 :: navbar"></div>
+    <div class="container">
+        <h3 class="center-align grey-text text-darken-1">List Cabang Menunggu Konfirmasi</h3>
 
-<div class="container">
+        <!-- Error -->
+        <div class="card-panel green-text text-darken-1" th:text="${success}" th:if="${success != null}"></div>
+        <div class="card-panel red-text text-darken-1" th:text="${error}" th:if="${error != null}"></div>
 
-  <div class="card m-4 p-4">
-    <div class="card-body">
-      <div class="justify-content-center">
-        <h2>List Cabang Menunggu Konfirmasi</h2>
-        <br>
         <div th:if="*{menungguKonfirmasi.size() != 0}">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-              <tr>
-                <th>No</th>
-                <th>Id Cabang</th>
-                <th>Nama</th>
-                <th>Nomor Telepon</th>
-                <th>Ukuran</th>
-                <th>Jumlah Item</th>
-                <th>Status</th>
-                <th th:if="${user.role.role == 'Kepala Retail'}"> Action</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr th:each="cabang, iterationStatus : ${menungguKonfirmasi}"
-                  th:style="${iterationStatus.even} ? 'background-color:#eeeeee;'">
-                <td th:text="${iterationStatus.count}"></td>
-                <td th:text="${cabang.id}"></td>
-                <td th:text="${cabang.nama}"></td>
-                <td th:text="${cabang.noTelepon}"></td>
-                <td th:text="${cabang.ukuran}"></td>
-                <td th:text="${cabang.jumlahItem}"></td>
-                <td th:if="${cabang.status} == 0">Menunggu Persetujuan</td>
-                <td th:if="${cabang.status} == 1">Ditolak</td>
-                <td th:if="${cabang.status} == 2">Disetujui</td>
-                <td th:if="${user.role.role} == 'Kepala Retail'">
-                  <a class="btn btn-success" th:href="@{/cabang/menyetujui/} + ${cabang.id}">
-                    Accept
-                  </a>
-                  <a class="btn btn-danger" th:href="@{/cabang/menolak/} + ${cabang.id}">
-                    Decline
-                  </a>
-                </td>
-              </tr>
-              </tbody>
+            <table class="responsive-table striped">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Id Cabang</th>
+                    <th>Nama</th>
+                    <th>Nomor Telepon</th>
+                    <th>Ukuran</th>
+                    <th>Jumlah Item</th>
+                    <th>Status</th>
+                    <th th:if="${user.role.role == 'Kepala Retail'}"> Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cabang, iterationStatus : ${menungguKonfirmasi}">
+                        <td th:text="${iterationStatus.count}"></td>
+                        <td th:text="${cabang.id}"></td>
+                        <td th:text="${cabang.nama}"></td>
+                        <td th:text="${cabang.noTelepon}"></td>
+                        <td th:text="${cabang.ukuran}"></td>
+                        <td th:text="${cabang.jumlahItem}"></td>
+                        <td th:if="${cabang.status} == 0">Menunggu Persetujuan</td>
+                        <td th:if="${cabang.status} == 1">Ditolak</td>
+                        <td th:if="${cabang.status} == 2">Disetujui</td>
+                        <td th:if="${user.role.role} == 'Kepala Retail'">
+                            <a th:href="@{/cabang/menolak/} + ${cabang.id}" class="waves-effect waves-light btn-small red lighten-1">
+                                <i class="material-icons left">close</i>
+                                Ditolak
+                            </a>
+                            <a th:href="@{/cabang/menyetujui/} + ${cabang.id}" type="submit" class="waves-effect waves-light btn-small teal">
+                                <i class="material-icons left">check</i>
+                                Diterima
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
-            <a class="btn btn-primary" th:href="@{/}">Home</a>
-          </div>
         </div>
         <div th:unless="*{menungguKonfirmasi.size() != 0}">
-          <h2 th:text="'Tidak ada cabang'"></h2>
+            <h5 class="indigo-text">Belum ada cabang yang ingin dikonfirmasi</h5>
         </div>
-      </div>
+        <a th:href="@{/}" class="waves-effect waves-light btn indigo lighten-1">
+            <i class="material-icons left">home</i>Kembali
+        </a>
     </div>
-  </div>
-</div>
-</div>
-</body>
 
+    <object th:include="fragments/fragment2 :: materializejs" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: tambahan" th:remove="tag"></object>
+</body>
 </html>

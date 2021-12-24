@@ -30,7 +30,7 @@ public class ItemCabangModel implements Serializable {
 
     @NotNull
     @Column(name = "harga", nullable = false)
-    private Integer harga;
+    private Double harga;
 
     @NotNull
     @Column(name = "stok", nullable = false)
