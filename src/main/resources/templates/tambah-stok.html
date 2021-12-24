@@ -24,7 +24,7 @@
             <select th:field="*{idItem}" class="form-control" required>
                 <option selected value="">-- Pilih item --</option>
                 <option th:each="i:${listItem}"
-                        th:value="${i.uuid}"
+                        th:value="${i.id}"
                         th:text="${i.nama}">
                 </option>
             </select>
