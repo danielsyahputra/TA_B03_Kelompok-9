@@ -76,4 +76,11 @@ public class ItemCabangRestController {
         }
         return response;
     }
+//
+//    @PutMapping(value = "/item/{id}/{stok}")
+//    private Mono<String> updateStokItem(
+//            @PathVariable String id,
+//            @PathVariable Integer stok) {
+//        return itemRestService.updateStokItem(id, stok);
+//    }
 }

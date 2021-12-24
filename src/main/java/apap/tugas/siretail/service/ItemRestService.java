@@ -7,4 +7,5 @@ import reactor.core.publisher.Mono;
 public interface ItemRestService {
     Mono<String> getListItem();
     ItemCabangModel createItem(ItemCabangDetail item);
+//    Mono<String> updateStokItem(String id, Integer stok);
 }

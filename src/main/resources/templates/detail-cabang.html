@@ -176,13 +176,35 @@
             $('.materialboxed').materialbox();
         });
 
+        const updateStokItem = (uuid, stok) => {
+            let APILink = "http://si-item.herokuapp.com/api/item/" + uuid;
+            $.ajax({
+                url: APILink,
+                type: "PUT",
+                headers: {
+                  'Access-Control-Allow-Origin': '*'
+                },
+                data: JSON.stringify({
+                    "stok": stok
+                }),
+                beforeSend: () => {
+                    console.log("UPDATE ke SI-ITEM");
+                },
+                success: response => {
+                    console.log("SUKSES");
+                }
+            })
+        }
+
         const tambahkanItem = item => {
             const buttonTambahItem = $(`#btn-item-${item.uuid}`);
             const cabangDiv = document.querySelector("#cabang");
             const idCabang = parseInt(cabangDiv.dataset.id);
 
             buttonTambahItem.click(() => {
+                const jumlahDitambah = $(`#input-${item.uuid}`).val()
                 let APILink = location.origin + "/api/v1/item";
+                // updateStokItem(item.uuid, (item.stok - jumlahDitambah));
                 $.ajax({
                     url: APILink,
                     type: "POST",
@@ -191,7 +213,7 @@
                         "nama": item.nama,
                         "harga": item.harga,
                         "kategori": item.kategori,
-                        "stok": item.stok,
+                        "stok": jumlahDitambah,
                         "idCabang": idCabang
                     }),
                     contentType: 'application/json',
@@ -203,6 +225,13 @@
                         location.reload();
                     }
                 })
+            })
+        }
+
+        const handleInput = item => {
+            $(`#input-${item.uuid}`).change(() => {
+                console.log("CHANGE");
+                console.log($(`#input-${item.uuid}`).val());
             })
         }
 
@@ -219,6 +248,10 @@
                         <span class="grey-text"><i class="material-icons">attach_money</i> Harga: ${harga}</span><br>
                         <span class="grey-text"> Stok: ${stok}</span><br>
                         <span class="grey-text"> Kategori: ${kategori}</span><br>
+                        <div class="input-field col s6">
+                          <input id="input-${uuid}"  type="number" class="validate">
+                          <label for="input-${uuid}">Jumlah Ditambah</label>
+                        </div>
                         <button class="btn btn-success" type="button" id="btn-item-${uuid}"><i class="material-icons">add</i></button>
                     </div>
                 </li>

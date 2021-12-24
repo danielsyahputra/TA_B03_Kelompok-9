@@ -28,7 +28,7 @@ public class KuponRestServiceImpl implements KuponRestService{
 
     @Override
     public Mono<String> getListKupon() {
-        return this.webClient.get().uri("/rest/coupon/list")
+        return this.webClient.get().uri("/api/v1/coupon/list")
                 .retrieve()
                 .bodyToMono(String.class);
     }
