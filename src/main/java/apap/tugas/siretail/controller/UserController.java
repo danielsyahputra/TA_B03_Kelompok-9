@@ -103,7 +103,8 @@ public class UserController {
     public String deleteUser(@PathVariable String username, Model model, RedirectAttributes redirAttrs) {
         UserModel user = userService.findUserbyUsername(username);
         userService.deleteUser(user);
-        redirAttrs.addFlashAttribute("delete", "User berhasil dihapus");
+        redirAttrs.addFlashAttribute("success", "User berhasil dihapus");
+        redirAttrs.addFlashAttribute("error", null);
         return "redirect:/user/viewall";
     }
 }

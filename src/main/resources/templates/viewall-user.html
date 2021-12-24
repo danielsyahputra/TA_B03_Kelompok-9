@@ -2,77 +2,63 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: materializecss" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: title (current='List User')" th:remove="tag"></object>
 </head>
 
 <body>
-<nav th:replace="fragments/fragment :: navbar"></nav>
+    <div th:replace="fragments/fragment2 :: navbar"></div>
+    <div class="container">
+        <h3 class="center-align grey-text text-darken-1">List User</h3>
 
+        <!-- Error -->
+        <div class="card-panel green-text text-darken-1" th:text="${success}" th:if="${success != null}"></div>
+        <div class="card-panel red-text text-darken-1" th:text="${error}" th:if="${error != null}"></div>
 
-<div class="container">
-
-    <div class="card m-4 p-4">
-        <div class="card-body">
-            <div th:if="${message != null}">
-                <span style="color : #3675B8">[[${message}]]</span>
-            </div>
-            <div class="alert alert-primary" role="alert" th:text="${delete}" th:if="${delete != null}"></div>
-            <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success != null}"></div>
-            <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error != null}"></div>
-
-            <div class="justify-content-center">
-                <h2>List User</h2>
-                <br>
-                <div th:if="*{listUser.size() != 0}">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Username</th>
-                                <th>Nama</th>
-                                <th>Email</th>
-                                <th>Peran</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="user, iterationStatus : ${listUser}"
-                                th:style="${iterationStatus.even} ? 'background-color:#eeeeee;'">
-                                <td th:text="${iterationStatus.count}"></td>
-                                <td th:text="${user.username}"></td>
-                                <td th:text="${user.nama}"></td>
-                                <td th:text="${user.email}"></td>
-                                <td th:text="${user.role.role}"></td>
-                                <td>
-                                    <a class="btn btn-danger" th:href="@{/user/delete/} + ${user.username}">
-                                        Delete
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-primary" th:href="@{/user/changeuser/} + ${user.username}">
-                                        Ubah
-                                    </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <a class="btn btn-primary" th:href="@{/user/add}">
-                            Tambah User
+        <div th:if="${listUser.size() != 0}">
+            <table class="responsive-table striped">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Username</th>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Peran</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user, iterationStatus : ${listUser}">
+                    <td th:text="${iterationStatus.count}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.nama}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.role.role}"></td>
+                    <td>
+                        <a th:href="@{/user/changeuser/} + ${user.username}"
+                           class="waves-effect waves-light btn-small lime edit-btn">
+                            <i class="material-icons">edit</i>
                         </a>
-                        <a class="btn btn-primary" th:href="@{/}">Home</a>
-                    </div>
-                </div>
-                <div th:unless="*{listUser.size() != 0}">
-                    <h2 th:text="'Tidak ada User'"></h2>
-                </div>
-            </div>
+                        <a th:href="@{/user/delete/} + ${user.username}"
+                           class="btn-small waves-effect waves-light red">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
+        <div th:if="${listUser.size() <= 0}">
+            <h5 class="indigo-text">Belum ada user!</h5>
+        </div>
+        <a th:href="@{/}" class="waves-effect waves-light btn indigo lighten-1">
+            <i class="material-icons left">home</i>Kembali
+        </a>
     </div>
-</div>
-</div>
+
+    <object th:include="fragments/fragment2 :: materializejs" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: tambahan" th:remove="tag"></object>
 </body>
 </html>
