@@ -64,7 +64,7 @@ public class CabangController {
         UserModel userModel = userService.findUserbyUsername(username);
         model.addAttribute("user", userModel);
         CabangModel cabang = cabangService.getCabangById(idCabang);
-        List<ItemCabangModel> listItem = itemCabangService.getListItem();
+        List<ItemCabangModel> listItem = itemCabangService.getListItemInCabang(cabang);
         List<Boolean> punyaKuponApaEngga = new ArrayList<>();
         for (int i = 0; i < listItem.size(); i++) {
             if (listItem.get(i).getIdPromo() == null) {
