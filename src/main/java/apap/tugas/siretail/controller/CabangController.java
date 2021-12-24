@@ -233,54 +233,41 @@ public class CabangController {
 
         CabangModel cabangOld = cabangService.getCabangById(cabang.getId());
 
-        System.out.println("PLEASE HELP ME");
-        System.out.println(cabangNew == cabangOld);
-
         List<ItemCabangModel> listItemClean = new ArrayList<>();
 
-        // Menyingkirkan item yang stok-nya masih default, yaitu 0. Berarti item tersebut tidak diinput oleh user.
-        for (ItemCabangModel anItem : cabang.getListItem()) {
-            if (anItem.getStok() > 0) {
-                anItem.setCabang(cabangNew);
-                listItemClean.add(itemCabangService.addItem(anItem));
-            }
-        }
-        cabangNew.setListItem(listItemClean);
-        System.out.println("List item clean diluar " + listItemClean.size());
-
         if ( !(cabangOld.getListItem().isEmpty()) ) {
-            System.out.println();
-            System.out.println();
-            System.out.println("size listItem " + cabangOld.getListItem().size());
-            for (ItemCabangModel item : cabangOld.getListItem()) {
-                System.out.println(item.getNama());
-                System.out.println(item.getStok());
-            }
-            System.out.println("Di dalam ELSE");
-            System.out.println();
-            System.out.println();
+
             List<ItemCabangModel> listItemFinal = cabangOld.getListItem();
+
+            // Menyingkirkan item yang stok-nya masih default, yaitu 0. Berarti item tersebut tidak diinput oleh user.
+            for (ItemCabangModel anItem : cabang.getListItem()) {
+                if (anItem.getStok() > 0) {
+                    anItem.setCabang(cabangNew);
+                    listItemClean.add(anItem);
+                }
+            }
+            cabangNew.setListItem(listItemClean);
 
             // Menambahkan item yang baru.
             for (ItemCabangModel itemNew : cabangNew.getListItem()) {
                 Boolean itemAlreadyExist = false;
                 for (ItemCabangModel itemOld : cabangOld.getListItem()) {
-                    if ( itemNew.getUuid() == itemOld.getUuid() ) {
+                    if ( itemNew.getUuid().equals(itemOld.getUuid()) ) {
                         itemAlreadyExist = true;
                     }
                 }
-                if (itemAlreadyExist = false) {
+                if (itemAlreadyExist == false) {
                     listItemFinal.add(itemCabangService.addItem(itemNew));
                 }
             }
 
             // Mengupdate stok item yang lama.
             for (ItemCabangModel itemNew : cabangNew.getListItem()) {
-                for (ItemCabangModel itemOld : listItemFinal) {
-                    if ( itemNew.getUuid() == itemOld.getUuid() ) {
-                        Integer stokFinal = itemNew.getStok() + itemOld.getStok();
-                        itemOld.setStok(stokFinal);
-                        itemCabangService.addItem(itemOld);
+                for (ItemCabangModel item2 : listItemFinal) {
+                    if ( itemNew.getUuid().equals(item2.getUuid()) ) {
+                        Integer stokFinal = itemNew.getStok() + item2.getStok();
+                        item2.setStok(stokFinal);
+                        itemCabangService.addItem(item2);
                     }
                 }
             }
@@ -289,18 +276,18 @@ public class CabangController {
         }
 
         if (cabangOld.getListItem().isEmpty()) {
-            System.out.println();
-            System.out.println();
-            System.out.println("Di dalam cabangOld.getListItem.isEmpty()");
-            System.out.println("List item clean dalam if" + listItemClean.size());
-            System.out.println();
+
+            // Menyingkirkan item yang stok-nya masih default, yaitu 0. Berarti item tersebut tidak diinput oleh user.
+            for (ItemCabangModel anItem : cabang.getListItem()) {
+                if (anItem.getStok() > 0) {
+                    anItem.setCabang(cabangNew);
+                    listItemClean.add(itemCabangService.addItem(anItem));
+                }
+            }
+            cabangNew.setListItem(listItemClean);
 
             cabangNew.setListItem(listItemClean);
             cabangService.ubahCabang(cabangNew);
-            for (ItemCabangModel item : cabangNew.getListItem()) {
-                System.out.println(item.getNama());
-                System.out.println(item.getStok());
-            }
 
             return "redirect:/cabang/viewall";
         }
