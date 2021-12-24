@@ -41,7 +41,7 @@
                             </li>
                             <li>
                                 <a class="dropdown-trigger" data-target="dropdown1">
-                                    Pengguna
+                                    <span th:text="'Hi, ' + ${#authentication.getPrincipal().getUsername()}"></span>
                                     <i class="material-icons right">arrow_drop_down</i>
                                 </a>
                             </li>

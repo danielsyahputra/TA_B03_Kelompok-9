@@ -24,14 +24,6 @@
                     <i class="material-icons left">business</i>
                     Cabang
                 </a>
-                <a th:if="${user.getRole().getRole() == 'Kepala Retail'}" th:href="@{/user/add}" class="waves-effect waves-light btn-large indigo">
-                    <i class="material-icons left">add</i>
-                    Tambah User
-                </a>
-                <a th:unless="${user.getRole().getRole() == 'Staff Cabang'}" th:href="@{/cabang/add}" class="waves-effect waves-light btn-large indigo">
-                    <i class="material-icons left">add</i>
-                    Tambah Cabang
-                </a>
                 <a th:if="${user.getRole().getRole() == 'Kepala Retail'}" th:href="@{/cabang/menunggukonfirmasi}" class="waves-effect waves-light btn-large indigo">
                     List Cabang Menunggu Konfirmasi
                 </a>

@@ -54,9 +54,11 @@ public class UserController {
     }
 
     @GetMapping(value = "/viewall")
-    public String viewAllUser(Model model) {
+    public String viewAllUser(Authentication auth, Model model) {
+        UserModel authUser = userService.findUserbyUsername(auth.getName());
         List<UserModel> listUser = userService.getListUser();
         model.addAttribute("listUser", listUser);
+        model.addAttribute("user", authUser);
         return "viewall-user";
     }
 
