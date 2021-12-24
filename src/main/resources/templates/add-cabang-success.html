@@ -2,24 +2,22 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: materializecss" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: title (current='Info')" th:remove="tag"></object>
 </head>
 
 <body>
-    <nav th:replace="fragments/fragment :: navbar"></nav>
-
+    <div th:replace="fragments/fragment2 :: navbar"></div>
     <div class="container">
-        <div class="card m-4 p-4">
-            <div class="card-body">
-                <div class="justify-content-center">
-                    <h2 th:text="'Cabang dengan nama ' + ${namaCabang} + ' berhasil ditambahkan.'"></h2>
-                    <br>
-                    <a class="btn btn-primary" th:href="@{/}">Home</a>
-                </div>
-            </div>
+        <div class="card-panel">
+            <h4 th:text="'Cabang dengan nama ' + ${namaCabang} + ' berhasil ditambahkan.'"
+                class="center-align black-text"></h4>
+            <a th:href="@{/}" class="waves-effect waves-light btn indigo lighten-1"><i class="material-icons left">home</i>Home</a>
         </div>
     </div>
+
+    <object th:include="fragments/fragment2 :: materializejs" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: tambahan" th:remove="tag"></object>
 </body>
 </html>

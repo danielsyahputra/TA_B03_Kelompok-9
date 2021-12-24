@@ -2,66 +2,74 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: materializecss" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: title (current='Update User')" th:remove="tag"></object>
 </head>
 
 <body>
-<nav th:replace="fragments/fragment :: navbar"></nav>
-
-<div class="container">
-    <div class="card m-4 p-4">
-        <div class="card-body">
-            <div class="justify-content-center">
-                <h2>Mengubah User</h2>
-                <br>
-                <form th:action="@{/user/changeuser}" th:object="${user}" method="POST">
-
-                    <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success != null}"></div>
-                    <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error != null}"></div>
-                    <br>
-
-                    <input type="hidden" th:field="${user.id}" />
-
-                    <label>Username</label>
-                    <input type="text" th:value="*{username}" name="username" class="form-control">
-
-                    <label>Nama</label>
-                    <input type="text" th:value="*{nama}" name="nama" class="form-control">
-
-                    <label>Email</label>
-                    <input type="email" th:value="*{email}" name="email" class="form-control">
-
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control"
-                           pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
-                           title="Password wajib mengandung angka, huruf besar, huruf kecil, dan simbol, serta terdiri dari minimal 8 karakter.">
-
-                    <div th:if="${kepalaRetail == 1}">
-                        <label>Role</label>
-                        <select name="role" class="form-control">
-                            <option selected value="">--pilih role--</option>
+    <div th:replace="fragments/fragment2 :: navbar"></div>
+    <div class="container">
+        <h3 class="center-align grey-text text-darken-1">Update User</h3>
+        <div class="card-panel">
+            <div class="card-panel green-text text-darken-1" th:text="${success}" th:if="${success != null}"></div>
+            <div class="card-panel red-text text-darken-1" th:text="${error}" th:if="${error != null}"></div>
+            <form th:action="@{/user/changeuser}" th:object="${user}" class="col s12" method="post">
+                <input type="hidden" th:field="${user.id}" />
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="username" th:value="*{username}" name="username" type="text" class="validate">
+                        <label for="username">Username</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="nama" th:value="*{nama}" name="nama" type="text" class="validate">
+                        <label for="nama">Nama</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email" th:value="*{email}" name="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="password" id="password" name="password" class="validate"
+                               pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
+                               title="Password wajib mengandung angka, huruf besar, huruf kecil, dan simbol, serta terdiri dari minimal 8 karakter.">
+                        <label for="password">Password</label>
+                    </div>
+                </div>
+                <div class="row" th:if="${kepalaRetail == 1}">
+                    <div class="input-field col s12">
+                        <select name="role">
+                            <option value="" th:text="'--Pilih Role--'" selected></option>
                             <option th:each="role : ${listRole}"
                                     th:value="${role.id}"
-                                    th:text="${role.role}">
-                            </option>
+                                    th:text="${role.role}"></option>
                         </select>
+                        <label>Role</label>
                     </div>
+                </div>
+                <div th:if="${kepalaRetail == 0}">
+                    <input type="hidden" th:field="${user.role}" />
+                </div>
 
-                    <div th:if="${kepalaRetail == 0}">
-                        <input type="hidden" th:field="${user.role}" />
-                    </div>
-
-                    <br>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a class="btn btn-primary" th:href="@{/}">Home</a>
-
-                </form>
-            </div>
+                <a th:href="@{/user/viewall}" class="waves-effect waves-light btn red lighten-1">
+                    <i class="material-icons left">close</i>
+                    batal
+                </a>
+                <button type="submit" class="waves-effect waves-light btn indigo lighten-1">
+                    <i class="material-icons left">send</i>
+                    simpan
+                </button>
+            </form>
         </div>
     </div>
-</div>
 
+    <object th:include="fragments/fragment2 :: materializejs" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: tambahan" th:remove="tag"></object>
 </body>
 </html>

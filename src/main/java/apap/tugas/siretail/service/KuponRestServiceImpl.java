@@ -22,14 +22,15 @@ public class KuponRestServiceImpl implements KuponRestService{
     ItemCabangService itemCabangService;
 
     @Override
-    public void terapkanPromoKeItem(Long idItem) {
+    public void terapkanPromoKeItem(String idItem) {
         ItemCabangModel item = itemCabangService.getItemByIdItem(idItem);
     }
 
     @Override
     public Mono<String> getListKupon() {
-        return this.webClient.get().uri("/rest/coupon/list")
+        return this.webClient.get().uri("/api/v1/coupon/list")
                 .retrieve()
                 .bodyToMono(String.class);
     }
+
 }

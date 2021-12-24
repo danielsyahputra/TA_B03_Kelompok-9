@@ -4,6 +4,7 @@ import apap.tugas.siretail.additional.CabangDetail;
 import apap.tugas.siretail.model.CabangModel;
 import apap.tugas.siretail.model.ItemCabangModel;
 import apap.tugas.siretail.model.UserModel;
+import apap.tugas.siretail.rest.PostItemDetail;
 import apap.tugas.siretail.service.CabangService;
 import apap.tugas.siretail.service.ItemCabangService;
 import apap.tugas.siretail.service.UserService;
@@ -64,12 +65,12 @@ public class CabangController {
         UserModel userModel = userService.findUserbyUsername(username);
         model.addAttribute("user", userModel);
         CabangModel cabang = cabangService.getCabangById(idCabang);
-        List<ItemCabangModel> listItem = itemCabangService.getListItem();
+        List<ItemCabangModel> listItem = itemCabangService.getListItemInCabang(cabang);
         List<Boolean> punyaKuponApaEngga = new ArrayList<>();
         for (int i = 0; i < listItem.size(); i++) {
             if (listItem.get(i).getIdPromo() == null) {
                 punyaKuponApaEngga.add(false);
-            }else {
+            } else {
                 punyaKuponApaEngga.add(true);
             }
         }
@@ -118,7 +119,7 @@ public class CabangController {
     }
 
     @GetMapping("/menunggukonfirmasi")
-    public String viewAllMenungguKonfirmasi(Authentication auth, Model model){
+    public String viewAllMenungguKonfirmasi(Authentication auth, Model model) {
         UserModel authUser = userService.findUserbyUsername(auth.getName());
         List<CabangDetail> menungguKonfirmasi = cabangService.getListCabangMenungguKonfirmasi();
 
@@ -129,7 +130,7 @@ public class CabangController {
     }
 
     @GetMapping("/menyetujui/{idCabang}")
-    public String menyetujuiCabang(@PathVariable Integer idCabang, Model model){
+    public String menyetujuiCabang(@PathVariable Integer idCabang, Model model) {
         CabangModel cabangToAccept = cabangService.getCabangById(idCabang);
         cabangService.acceptCabang(idCabang);
 
@@ -138,25 +139,38 @@ public class CabangController {
     }
 
     @GetMapping("menolak/{idCabang}")
-    public String menolakCabang(@PathVariable Integer idCabang, Model model){
+    public String menolakCabang(@PathVariable Integer idCabang, Model model) {
         CabangModel cabangToDecline = cabangService.getCabangById(idCabang);
         cabangService.declineCabang(idCabang);
 
         model.addAttribute("namaCabang", cabangToDecline.getNama());
         return "decline-cabang-success";
     }
-    @GetMapping("tambahstok/{idCabang}")
-    public String tambahStok(@PathVariable Integer idCabang, Model model){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) auth.getPrincipal();
-        String username = user.getUsername();
-        UserModel userModel = userService.findUserbyUsername(username);
-        model.addAttribute("user", userModel);
-        CabangModel cabang = cabangService.getCabangById(idCabang);
-        List<ItemCabangModel> listItem = itemCabangService.getListItem();
 
-        model.addAttribute("cabang", cabang);
+    @GetMapping("tambahstok/{idCabang}")
+    public String tambahStok(@PathVariable Integer idCabang, Model model) {
+
+        List<ItemCabangModel> listItem = itemCabangService.getListItem();
+        PostItemDetail item = new PostItemDetail();
+        item.setIdCabang(Integer.parseInt(String.valueOf(idCabang)));
+        model.addAttribute("idCabang", idCabang);
         model.addAttribute("listItem", listItem);
-     return "tambah-stok";
+        model.addAttribute("item", item);
+        return "tambah-stok";
+    }
+
+    @PostMapping("/tambahStok")
+    public String tambahStokItem(@ModelAttribute PostItemDetail item, Model model) {
+        String itemName = "item";
+        String itemCode = "code";
+        List<ItemCabangModel> listItem = itemCabangService.getListItem();
+        if (item.getTambahanStok() < 1) {
+            model.addAttribute("listItem", listItem);
+            model.addAttribute("idCabang", item.getIdItem());
+            model.addAttribute("item", item);
+            model.addAttribute("error", "Stok kurang dari 1");
+            return "tambah-stok";
+        }
+        return "tambah-stok";
     }
 }

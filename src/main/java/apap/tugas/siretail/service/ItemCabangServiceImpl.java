@@ -1,5 +1,6 @@
 package apap.tugas.siretail.service;
 
+import apap.tugas.siretail.model.CabangModel;
 import apap.tugas.siretail.model.ItemCabangModel;
 import apap.tugas.siretail.repository.ItemCabangDb;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class ItemCabangServiceImpl implements ItemCabangService{
 
 
     @Override
-    public ItemCabangModel getItemByIdItem(Long idItem) {
+    public ItemCabangModel getItemByIdItem(String idItem) {
         Optional<ItemCabangModel> item = itemCabangDb.findById(idItem);
         if (item.isPresent()) return item.get();
         return null;
@@ -26,5 +27,16 @@ public class ItemCabangServiceImpl implements ItemCabangService{
     @Override
     public List<ItemCabangModel> getListItem() {
         return itemCabangDb.findAll();
+    }
+
+    @Override
+    public void deleteItem(ItemCabangModel item) {
+        itemCabangDb.delete(item);
+    }
+
+    @Override
+    public List<ItemCabangModel> getListItemInCabang(CabangModel cabangModel) {
+        List<ItemCabangModel> listItem = itemCabangDb.findItemCabangModelByCabang(cabangModel);
+        return listItem;
     }
 }

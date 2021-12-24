@@ -2,51 +2,59 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Cabang</title>
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: materializecss" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: title (current='Add Cabang')" th:remove="tag"></object>
 </head>
 
 <body>
-    <nav th:replace="fragments/fragment :: navbar"></nav>
+    <div th:replace="fragments/fragment2 :: navbar"></div>
     <div class="container">
-        <div class="card m-4 p-4">
-            <div class="card-body">
-                <div class="justify-content-center">
-                    <h2>Tambah Cabang</h2>
-                    <br>
-                    <form th:action="@{/cabang/add}" th:object="${cabang}" method="POST">
+        <h3 class="center-align grey-text text-darken-1">Add Cabang</h3>
+        <div class="card-panel">
+            <div class="card-panel green-text text-darken-1" th:text="${success}" th:if="${success != null}"></div>
+            <div class="card-panel red-text text-darken-1" th:text="${error}" th:if="${error != null}"></div>
+            <form th:action="@{/cabang/add}" th:object="${cabang}" class="col s12" method="post">
+                <input type="hidden" name="status" th:value="2" class="form-control">
+                <input type="hidden" name="penanggungJawab" th:value="*{penanggungJawab}" />
 
-                        <div th:if="${message != null}">
-                            <span style="color : #3675B8">[[${message}]]</span>
-                        </div>
-                        <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success != null}"></div>
-                        <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error != null}"></div>
-                        <br>
-
-                        <input type="hidden" name="status" th:value="2" class="form-control">
-                        <input type="hidden" name="penanggungJawab" th:value="*{penanggungJawab}" />
-
-                        <label>Nama Cabang</label>
-                        <input type="text" name="nama" class="form-control">
-
-                        <label>Alamat Cabang</label>
-                        <input type="text" name="alamat" class="form-control">
-
-                        <label>Nomor Telepon</label>
-                        <input type="text" name="nomorTelepon" class="form-control">
-
-                        <label>Ukuran (m^2)</label>
-                        <input type="number" name="ukuran" class="form-control">
-
-                        <br>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a class="btn btn-primary" th:href="@{/}">Home</a>
-
-                    </form>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="nama" name="nama" type="text" class="validate">
+                        <label for="nama">Nama Cabang</label>
+                    </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="alamat" name="alamat" type="text" class="validate">
+                        <label for="alamat">Alamat Cabang</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="nomorTelepon" name="nomorTelepon" type="text" class="validate">
+                        <label for="nomorTelepon">Nomor Telepon</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="ukuran" name="ukuran" type="number" class="validate">
+                        <label for="ukuran">Ukuran (m^2)</label>
+                    </div>
+                </div>
+                <a th:href="@{/cabang/viewall}" class="waves-effect waves-light btn red lighten-1">
+                    <i class="material-icons left">close</i>
+                    batal
+                </a>
+                <button type="submit" class="waves-effect waves-light btn indigo lighten-1">
+                    <i class="material-icons left">send</i>
+                    simpan
+                </button>
+            </form>
         </div>
     </div>
+
+    <object th:include="fragments/fragment2 :: materializejs" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: tambahan" th:remove="tag"></object>
 </body>
 </html>

@@ -54,9 +54,11 @@ public class UserController {
     }
 
     @GetMapping(value = "/viewall")
-    public String viewAllUser(Model model) {
+    public String viewAllUser(Authentication auth, Model model) {
+        UserModel authUser = userService.findUserbyUsername(auth.getName());
         List<UserModel> listUser = userService.getListUser();
         model.addAttribute("listUser", listUser);
+        model.addAttribute("user", authUser);
         return "viewall-user";
     }
 
@@ -103,7 +105,8 @@ public class UserController {
     public String deleteUser(@PathVariable String username, Model model, RedirectAttributes redirAttrs) {
         UserModel user = userService.findUserbyUsername(username);
         userService.deleteUser(user);
-        redirAttrs.addFlashAttribute("delete", "User berhasil dihapus");
+        redirAttrs.addFlashAttribute("success", "User berhasil dihapus");
+        redirAttrs.addFlashAttribute("error", null);
         return "redirect:/user/viewall";
     }
 }
