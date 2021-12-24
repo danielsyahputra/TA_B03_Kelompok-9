@@ -60,6 +60,9 @@
         <img src="https://w3hubs.com/Bootstrap-5-Login-Form/login.svg" class="w-100">
     </div>
     <div class="col p-0 bg-custom d-flex justify-content-center align-items-center flex-column w-100">
+        <div th:if="${param.error}">
+            <span style="color: red">Invalid username or password</span>
+        </div>
         <form class="w-75" th:action="@{/login}" method="POST">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Username</label>
