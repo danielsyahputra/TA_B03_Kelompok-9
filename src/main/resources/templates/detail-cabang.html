@@ -22,10 +22,14 @@
             <p th:text="'No Telepon: ' + ${cabang.nomorTelepon}"></p>
             <p th:text="'Alamat: ' + ${cabang.alamat}"></p>
             <p th:text="'Ukuran: ' + ${cabang.ukuran} +'m^2'"></p>
+            <a th:if="${user.getRole().getRole() == 'Kepala Retail'}" th:href="@{/cabang/ubah/} + ${cabang.id}"
+               class="waves-effect waves-light btn-small lime edit-btn">
+                <i class="material-icons">edit</i>
+            </a>
         </div>
 
         <!--Button tambah items-->
-        <a th:if="${user.role.role != 'Staff Cabang'}" type="button"
+        <a th:if="${user.role.role != 'Staff Cabang' and cabang.status == 2}" type="button"
            class="waves-effect waves-light btn-small" id="tambah-item">Tambah Item</a>
 
         <!-- Loader -->
@@ -81,13 +85,9 @@
         </div>
 
         <!--Kupon Kontainer-->
-        <div class="card-panel" id="kupon-container"></div>
+        <div th:if="${cabang.status == 2}" class="card-panel" id="kupon-container"></div>
 
         <!--Button-->
-        <a th:if="${user.getRole().getRole() == 'Kepala Retail'}" th:href="@{/cabang/ubah/} + ${cabang.id}"
-           class="waves-effect waves-light btn-small lime edit-btn">
-            <i class="material-icons">edit</i>
-        </a>
         <a th:href="@{/cabang/viewall}" class="waves-effect waves-light btn indigo lighten-1">
             Kembali
         </a>
