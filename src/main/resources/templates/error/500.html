@@ -2,16 +2,24 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
-    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: materializecss" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: title (current='Info')" th:remove="tag"></object>
 </head>
+
 <body>
-    <nav th:replace="fragments/fragment :: navbar"></nav>
-    <div class="container-fluid">
-        <h2>Error pada server, tunggu dalam beberapa saat.</h2>
-        <h2>Silahkan mencoba log-out dan log-in kembali.</h2>
-        <a th:href="@{/}">Kembali ke home</a>
+    <div th:replace="fragments/fragment2 :: navbar"></div>
+    <div class="container">
+        <div class="card-panel">
+            <h4 th:text="'Error pada server, tunggu dalam beberapa saat.'"
+                class="center-align black-text"></h4>
+            <h4 th:text="'Silahkan mencoba log-out dan log-in kembali.'"
+                class="center-align black-text"></h4>
+            <a th:href="@{/}" class="waves-effect waves-light btn indigo lighten-1"><i class="material-icons left">home</i>Home</a>
+        </div>
     </div>
+
+    <object th:include="fragments/fragment2 :: materializejs" th:remove="tag"></object>
+    <object th:include="fragments/fragment2 :: tambahan" th:remove="tag"></object>
 </body>
 </html>
