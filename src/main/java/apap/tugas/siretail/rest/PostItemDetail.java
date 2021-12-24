@@ -20,6 +20,4 @@ public class PostItemDetail {
     private int tambahanStok;
     @JsonIgnoreProperties("idCabang")
     private int idCabang;
-    @JsonProperty("tanggalRequest")
-    private Date tanggalRequest;
 }
