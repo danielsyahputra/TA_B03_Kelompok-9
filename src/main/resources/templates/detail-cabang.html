@@ -33,7 +33,7 @@
            class="waves-effect waves-light btn-small" id="tambah-item">Tambah Item</a>
 
         <!--Button tambah Stok-->
-        <a  type="button" class="waves-effect waves-light btn-small" th:href="@{/cabang/ubah/} id="tambah-stok">Tambah Stok</a>
+        <a  type="button" class="waves-effect waves-light btn-small" th:href="@{/cabang/ubah/} + ${cabang.id}" id="tambah-stok">Tambah Stok</a>
 
         <!-- Loader -->
         <div class="" id="loader2">
