@@ -47,4 +47,11 @@ public class ItemRestServiceImpl implements ItemRestService{
         newItem.setId(item.getId());
         return itemCabangDb.save(newItem);
     }
+//
+//    @Override
+//    public Mono<String> updateStokItem(String id, Integer stok) {
+//        return this.webClient.put().uri("/api/item/" + id + "?stok=" + stok)
+//                .retrieve()
+//                .bodyToMono(String.class);
+//    }
 }
