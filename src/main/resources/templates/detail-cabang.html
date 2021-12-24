@@ -110,10 +110,12 @@
                         "idPromo": kupon.idCoupon
                     },
                     beforeSend: () => {
+                        $("#loader").addClass("progress");
                         console.log("MENGIRIM");
                     },
                     success: response => {
-                        alert("Berhasil menambahkan diskon!");
+                        M.toast({ html: `Berhasil menambahkan diskon...`, classes: "rounded" });
+                        $("#loader").removeClass("progress");
                         location.reload();
                     }
                 })
