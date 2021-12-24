@@ -33,7 +33,7 @@ public class ItemCabangRestController {
                                           @RequestParam(name = "idPromo") Integer idPromo) {
         ItemCabangModel item = itemCabangService.getItemByIdItem(idItem);
         item.setIdPromo(idPromo);
-        item.setHarga(item.getHarga() - jumlahDiskon);
+        item.setHarga(item.getHarga() * ((100 - jumlahDiskon) * 0.01));
         return itemCabangDb.save(item);
     }
 
