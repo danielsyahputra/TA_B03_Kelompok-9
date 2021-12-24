@@ -16,7 +16,7 @@ public class ItemCabangServiceImpl implements ItemCabangService{
     private ItemCabangDb itemCabangDb;
 
     @Override
-    public ItemCabangModel createItemCabangModel(String uuid, String nama, Integer harga, Integer stok, String kategori) {
+    public ItemCabangModel createTempItemCabangModel(String uuid, String nama, Integer harga, Integer stok, String kategori) {
         ItemCabangModel suatuItem = new ItemCabangModel();
 
         suatuItem.setUuid(uuid);
@@ -26,9 +26,13 @@ public class ItemCabangServiceImpl implements ItemCabangService{
         suatuItem.setKategori(kategori);
         suatuItem.setCabang(null);
         suatuItem.setIdPromo(0);
-
-        itemCabangDb.save(suatuItem);
         return suatuItem;
+    }
+
+    @Override
+    public ItemCabangModel addItem(ItemCabangModel item) {
+        itemCabangDb.save(item);
+        return item;
     }
 
     @Override

@@ -189,6 +189,8 @@ public class CabangController {
             listKategori.add(item.getString("kategori"));
         }
 
+        // Membuat list berisi model item yang akan ditampilkan
+        List<ItemCabangModel> listItem = new ArrayList<>();
         for (int a = 0; a < listUUID.size(); a++ ) {
             String uuid = listUUID.get(a);
             String nama = listNama.get(a);
@@ -196,19 +198,32 @@ public class CabangController {
             Integer stok = listStok.get(a);
             String kategori = listKategori.get(a);
 
-            itemCabangService.createItemCabangModel(uuid, nama, harga, stok, kategori);
+            if (stok != 0) {
+                listItem.add(itemCabangService.createTempItemCabangModel(uuid, nama, harga, stok, kategori));
+            }
         }
 
         CabangModel cabang = cabangService.getCabangById(idCabang);
-        List<ItemCabangModel> listItem = itemCabangService.getListItem();
+        cabang.setListItem(listItem);
+        listItem = cabang.getListItem();
 
         model.addAttribute("cabang", cabang);
-        model.addAttribute("listItem", listItem);
-
-        for (String nama : listNama) {
-            System.out.println(nama);
-        }
 
         return "form-get-all-item";
+    }
+
+    @PostMapping("/getItem")
+    public String getAllItemSubmit(
+            @ModelAttribute CabangModel cabang,
+            Model model
+    ){
+//        System.out.println("Ini dia Cabang " + cabang.getNama());
+//        System.out.println("jumlah item di listItem Cabang " + cabang.getListItem().size());
+//        for (ItemCabangModel anItem : cabang.getListItem()) {
+//            System.out.println(anItem.getNama());
+//            System.out.println(anItem.getStok());
+//        }
+
+        return "redirect:/";
     }
 }
