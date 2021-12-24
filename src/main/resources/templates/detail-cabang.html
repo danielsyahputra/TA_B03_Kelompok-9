@@ -38,7 +38,9 @@
                                 <th>Id Item</th>
                                 <th>Nama</th>
                                 <th>Harga</th>
+                                <th>Stok</th>
                                 <th th:if="${user.role.role != 'Staff Cabang'}">Action</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,6 +50,7 @@
                             <td th:text="${item.id}"></td>
                             <td th:text="${item.nama}"></td>
                             <td th:text="${item.harga}"></td>
+                            <td th:text="${item.stok}"></td>
                             <td th:if="${user.role.role != 'Staff Cabang'}">
                                 <button th:if="${!punyaKupon[__${iterationStatus.index}__]}" class="btn btn-success button-kupon" type="button">Terapkan Kupon</button>
                             </td>

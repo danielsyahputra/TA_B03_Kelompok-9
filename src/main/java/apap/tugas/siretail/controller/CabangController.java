@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.WebDataBinder;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,17 +74,7 @@ public class CabangController {
         CabangModel cabang = cabangService.getCabangById(idCabang);
 
         List<ItemCabangModel> listItem = itemCabangService.getListItem();
-        List<ItemCabangModel> filteredListItem = new ArrayList<>();
         List<Boolean> punyaKuponApaEngga = new ArrayList<>();
-
-        for (ItemCabangModel item : listItem) {
-            if (item.getCabang() != null) {
-                if (item.getCabang().equals(cabang)) {
-                    filteredListItem.add(item);
-                }
-            }
-        }
-        listItem = filteredListItem;
 
         for (int i = 0; i < listItem.size(); i++) {
             if (listItem.get(i).getIdPromo() == null) {
@@ -198,18 +190,31 @@ public class CabangController {
             Integer stok = listStok.get(a);
             String kategori = listKategori.get(a);
 
-            if (stok != 0) {
-                listItem.add(itemCabangService.createTempItemCabangModel(uuid, nama, harga, stok, kategori));
+            if (stok > 0) {
+                listItem.add(itemCabangService.createTempItemCabangModel(uuid, nama, harga, 0, kategori));
             }
         }
 
         CabangModel cabang = cabangService.getCabangById(idCabang);
         cabang.setListItem(listItem);
-        listItem = cabang.getListItem();
+
+        // List untuk menampilkan jumlah stok pada database SI-ITEM
+        List<Integer> listStokSiItem = new ArrayList<>();
+        for (Integer stok : listStok) {
+            if (stok > 0) {
+                listStokSiItem.add(stok);
+            }
+        }
 
         model.addAttribute("cabang", cabang);
+        model.addAttribute("listStok", listStokSiItem);
 
         return "form-get-all-item";
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setAutoGrowCollectionLimit(1000);
     }
 
     @PostMapping("/getItem")
@@ -217,12 +222,23 @@ public class CabangController {
             @ModelAttribute CabangModel cabang,
             Model model
     ){
-//        System.out.println("Ini dia Cabang " + cabang.getNama());
-//        System.out.println("jumlah item di listItem Cabang " + cabang.getListItem().size());
-//        for (ItemCabangModel anItem : cabang.getListItem()) {
-//            System.out.println(anItem.getNama());
-//            System.out.println(anItem.getStok());
-//        }
+        // List item yang benar-benar di input oleh pengguna, memiliki stok > 0
+        List<ItemCabangModel> listItemReal = new ArrayList<>();
+        for (ItemCabangModel anItem : cabang.getListItem()) {
+            if (anItem.getStok() > 0) {
+                anItem.setCabang(cabang);
+                listItemReal.add(itemCabangService.addItem(anItem));
+            }
+        }
+        CabangModel cabangReal = cabang;
+        cabangReal.setListItem(listItemReal);
+        cabangService.ubahCabang(cabangReal);
+
+        System.out.println("NGENTOT di " + cabangReal.getNama() + " " + cabangReal.getId());
+        for (ItemCabangModel item : cabangReal.getListItem()) {
+            System.out.println(item.getNama());
+            System.out.println(item.getStok());
+        }
 
         return "redirect:/";
     }

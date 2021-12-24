@@ -44,21 +44,28 @@
                                 <th>Stok Tersedia</th>
                                 <th>Kategori</th>
                                 <th>Jumlah stok yang ingin ditambahkan</th>
-                                <th>kontol</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="item, iterationStatus : *{listItem}"
                                 th:style="${iterationStatus.even} ? 'background-color:#eeeeee;'">
-                                <td th:text="${iterationStatus.count}"></td>
-                                <td th:text="${item.nama}"></td>
-                                <td th:text="${item.harga}"></td>
-                                <td th:text="${item.stok}"></td>
-                                <td th:text="${item.kategori}"></td>
-                                <td>
-                                    <input th:field="*{listItem[__${iterationStatus.index}__].stok}" type="number" class="form-control">
-                                </td>
-                                <td th:text="${iterationStatus.index}"></td>
+                                    <td th:text="${iterationStatus.count}"></td>
+                                    <td th:text="${item.nama}"></td>
+                                    <td th:text="${item.harga}"></td>
+                                    <td th:text="${listStok[__${iterationStatus.index}__]}"></td>
+                                    <td th:text="${item.kategori}"></td>
+                                    <td>
+                                        <input th:field="*{listItem[__${iterationStatus.index}__].stok}" type="number" value="0" autocomplete="off" class="form-control">
+                                    </td>
+                                    <div>
+                                        <input type="hidden"  th:field="*{listItem[__${iterationStatus.index}__].id}"/>
+                                        <input type="hidden"  th:field="*{listItem[__${iterationStatus.index}__].uuid}"/>
+                                        <input type="hidden"  th:field="*{listItem[__${iterationStatus.index}__].nama}"/>
+                                        <input type="hidden"  th:field="*{listItem[__${iterationStatus.index}__].harga}"/>
+                                        <input type="hidden"  th:field="*{listItem[__${iterationStatus.index}__].kategori}"/>
+                                        <input type="hidden"  th:field="*{listItem[__${iterationStatus.index}__].idPromo}"/>
+                                    </div>
                             </tr>
                             </tbody>
                         </table>
