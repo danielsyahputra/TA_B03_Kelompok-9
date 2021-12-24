@@ -23,4 +23,13 @@ public class ItemCabangRestController {
         item.setHarga(item.getHarga() - jumlahDiskon);
         return itemCabangDb.save(item);
     }
+
+    @PostMapping(value="/item/{idItem}")
+    private ItemCabangModel tambahStok(@PathVariable Long idItem, @RequestParam(name="idBarang") Integer idBarang
+
+    ){
+
+        ItemCabangModel item = itemCabangService.getItemByIdItem(idItem);
+        return itemCabangDb.save(item);
+    }
 }
