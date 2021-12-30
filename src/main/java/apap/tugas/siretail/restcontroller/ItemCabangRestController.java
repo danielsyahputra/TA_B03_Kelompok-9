@@ -4,6 +4,7 @@ import apap.tugas.siretail.model.ItemCabangModel;
 import apap.tugas.siretail.repository.ItemCabangDb;
 import apap.tugas.siretail.rest.BaseResponse;
 import apap.tugas.siretail.rest.ItemCabangDetail;
+import apap.tugas.siretail.rest.PostItemDetail;
 import apap.tugas.siretail.service.ItemCabangService;
 import apap.tugas.siretail.service.ItemRestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class ItemCabangRestController {
     private ItemRestService itemRestService;
 
     @PutMapping(value = "/item/{idItem}")
-    private ItemCabangModel terapkanPromo(@PathVariable String idItem, @RequestParam(name = "jumlahDiskon") Integer jumlahDiskon,
+    private ItemCabangModel terapkanPromo(@PathVariable String idItem, @RequestParam(name = "jumlahDiskon") Double jumlahDiskon,
                                           @RequestParam(name = "idPromo") Integer idPromo) {
         ItemCabangModel item = itemCabangService.getItemByIdItem(idItem);
         item.setIdPromo(idPromo);
@@ -60,7 +61,7 @@ public class ItemCabangRestController {
         return response;
     }
 
-    @DeleteMapping(value = "/item/{id}")
+    @DeleteMapping(value = "/item/delete/{id}")
     private BaseResponse<ItemCabangModel> deleteItem(@PathVariable String id) {
         BaseResponse<ItemCabangModel> response = new BaseResponse<>();
         try {
@@ -76,6 +77,8 @@ public class ItemCabangRestController {
         }
         return response;
     }
+
+
 //
 //    @PutMapping(value = "/item/{id}/{stok}")
 //    private Mono<String> updateStokItem(
@@ -83,4 +86,14 @@ public class ItemCabangRestController {
 //            @PathVariable Integer stok) {
 //        return itemRestService.updateStokItem(id, stok);
 //    }
+
+//    @PostMapping(value="/item/{idItem}")
+//    private ItemCabangModel tambahStok(@PathVariable Long idItem, @RequestParam(name="idBarang") Integer idBarang
+//
+//    ){
+//
+//        ItemCabangModel item = itemCabangService.getItemByIdItem(idItem);
+//        return itemCabangDb.save(item);
+//    }
+
 }

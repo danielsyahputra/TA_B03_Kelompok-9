@@ -4,8 +4,11 @@ import apap.tugas.siretail.additional.CabangDetail;
 import apap.tugas.siretail.model.CabangModel;
 import apap.tugas.siretail.model.ItemCabangModel;
 import apap.tugas.siretail.model.UserModel;
+import apap.tugas.siretail.rest.ItemCabangDetail;
+import apap.tugas.siretail.rest.PostItemDetail;
 import apap.tugas.siretail.service.CabangService;
 import apap.tugas.siretail.service.ItemCabangService;
+import apap.tugas.siretail.service.ItemRestService;
 import apap.tugas.siretail.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,6 +33,9 @@ public class CabangController {
 
     @Autowired
     private ItemCabangService itemCabangService;
+
+    @Autowired
+    private ItemRestService itemRestService;
 
     @GetMapping("/add")
     public String addCabangFormPage(Model model) {
@@ -69,7 +75,7 @@ public class CabangController {
         for (int i = 0; i < listItem.size(); i++) {
             if (listItem.get(i).getIdPromo() == null) {
                 punyaKuponApaEngga.add(false);
-            }else {
+            } else {
                 punyaKuponApaEngga.add(true);
             }
         }
@@ -118,7 +124,7 @@ public class CabangController {
     }
 
     @GetMapping("/menunggukonfirmasi")
-    public String viewAllMenungguKonfirmasi(Authentication auth, Model model){
+    public String viewAllMenungguKonfirmasi(Authentication auth, Model model) {
         UserModel authUser = userService.findUserbyUsername(auth.getName());
         List<CabangDetail> menungguKonfirmasi = cabangService.getListCabangMenungguKonfirmasi();
 
@@ -129,7 +135,7 @@ public class CabangController {
     }
 
     @GetMapping("/menyetujui/{idCabang}")
-    public String menyetujuiCabang(@PathVariable Integer idCabang, Model model){
+    public String menyetujuiCabang(@PathVariable Integer idCabang, Model model) {
         CabangModel cabangToAccept = cabangService.getCabangById(idCabang);
         cabangService.acceptCabang(idCabang);
 
@@ -138,11 +144,94 @@ public class CabangController {
     }
 
     @GetMapping("menolak/{idCabang}")
-    public String menolakCabang(@PathVariable Integer idCabang, Model model){
+    public String menolakCabang(@PathVariable Integer idCabang, Model model) {
         CabangModel cabangToDecline = cabangService.getCabangById(idCabang);
         cabangService.declineCabang(idCabang);
 
         model.addAttribute("namaCabang", cabangToDecline.getNama());
         return "decline-cabang-success";
+    }
+
+    @GetMapping("tambahstok/{idCabang}")
+    public String tambahStok(@PathVariable Integer idCabang, Model model) {
+
+        List<ItemCabangModel> listItem = itemCabangService.getListItem();
+        PostItemDetail item = new PostItemDetail();
+        item.setIdCabang(Integer.parseInt(String.valueOf(idCabang)));
+        model.addAttribute("idCabang", idCabang);
+        model.addAttribute("listItem", listItem);
+        model.addAttribute("item", item);
+        return "tambah-stok";
+    }
+
+    @PostMapping("/tambahStok")
+    public String tambahStokItem(@ModelAttribute PostItemDetail item, Model model) {
+        String itemName = "item";
+        String itemId = "code";
+        List<ItemCabangModel> listItem = itemCabangService.getListItem();
+        if (item.getTambahanStok() < 1) {
+            model.addAttribute("listItem", listItem);
+            model.addAttribute("idCabang", item.getIdItem());
+            model.addAttribute("item", item);
+            model.addAttribute("error", "Stok kurang dari 1");
+            return "tambah-stok";
+        }
+        for (ItemCabangModel icd : listItem){
+            if(icd.getId().equals(item.getIdItem())){
+                int kategori = 0;
+                String strKategori = icd.getKategori();
+                if(strKategori.equals("BUKU")){
+                    kategori = 1;
+                }
+                else if(strKategori.equals("DAPUR")){
+                    kategori = 2;
+                }
+                else if(strKategori.equals("MAKANAN & MINUMAN")){
+                    kategori = 3;
+                }
+                else if(strKategori.equals("ELEKTRONIK")){
+                    kategori = 4;
+                }
+                else if(strKategori.equals("FASHION")){
+                    kategori = 5;
+                }
+                else if(strKategori.equals("KECANTIKAN & PERAWATAN DIRI")){
+                    kategori = 6;
+                }
+                else if(strKategori.equals("FILM & MUSIK")){
+                    kategori = 7;
+                }
+                else if(strKategori.equals("GAMING")){
+                    kategori = 8;
+                }
+                else if(strKategori.equals("GADGET")){
+                    kategori = 9;
+                }
+                else if(strKategori.equals("KESEHATAN")){
+                    kategori = 10;
+                }
+                else if(strKategori.equals("RUMAH TANGGA")){
+                    kategori = 11;
+                }
+                else if(strKategori.equals("FURNITURE")){
+                    kategori = 12;
+                }
+                else if(strKategori.equals("ALAT & PERANGKAT KERAS")){
+                    kategori = 13;
+                }
+                else if(strKategori.equals("WEDDING")){
+                    kategori = 14;
+                }
+
+                item.setIdKategori(kategori);
+                itemId = itemRestService.postIncreaseItem(item);
+                itemName = icd.getNama();
+                model.addAttribute("cabang", item.getIdCabang());
+            }
+        }
+        model.addAttribute("name", itemName);
+        model.addAttribute("id", itemId);
+        model.addAttribute("item", item);
+        return "tambah-stok-berhasil";
     }
 }
