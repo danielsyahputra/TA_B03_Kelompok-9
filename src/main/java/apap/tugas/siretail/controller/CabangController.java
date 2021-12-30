@@ -231,6 +231,7 @@ public class CabangController {
         }
         model.addAttribute("name", itemName);
         model.addAttribute("id", itemId);
-        return "tambah-stok";
+        model.addAttribute("item", item);
+        return "tambah-stok-berhasil";
     }
 }
