@@ -30,7 +30,7 @@ public class ItemCabangRestController {
     private ItemRestService itemRestService;
 
     @PutMapping(value = "/item/{idItem}")
-    private ItemCabangModel terapkanPromo(@PathVariable String idItem, @RequestParam(name = "jumlahDiskon") Integer jumlahDiskon,
+    private ItemCabangModel terapkanPromo(@PathVariable String idItem, @RequestParam(name = "jumlahDiskon") Double jumlahDiskon,
                                           @RequestParam(name = "idPromo") Integer idPromo) {
         ItemCabangModel item = itemCabangService.getItemByIdItem(idItem);
         item.setIdPromo(idPromo);
@@ -61,7 +61,7 @@ public class ItemCabangRestController {
         return response;
     }
 
-    @DeleteMapping(value = "/item/{id}")
+    @DeleteMapping(value = "/item/delete/{id}")
     private BaseResponse<ItemCabangModel> deleteItem(@PathVariable String id) {
         BaseResponse<ItemCabangModel> response = new BaseResponse<>();
         try {
