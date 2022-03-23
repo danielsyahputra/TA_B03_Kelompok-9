@@ -104,12 +104,12 @@
         const tambahkanKupon = (kupon, idItem) => {
             const buttonTambah = $(`#btn-kupon-${kupon.idCoupon}`)
             buttonTambah.click(() => {
-                let APILink = location.origin + `/api/v1/item/${idItem}`
+                let APILink = location.origin + `/api/v1/item/${idItem}/`
                 $.ajax({
                     url: APILink,
                     type: "PUT",
                     data: {
-                        "jumlahDiskon": kupon.discountAmount,
+                        "jumlahDiskon": +(kupon.discountAmount),
                         "idPromo": kupon.idCoupon
                     },
                     beforeSend: () => {
@@ -353,7 +353,7 @@
             btn.addEventListener('click', () => {
                 let row = btn.parentElement.parentElement;
                 let id = row.children[1].innerHTML;
-                let APILink = location.origin + "/api/v1/item/" + id;
+                let APILink = location.origin + "/api/v1/item/delete/" + id;
                 $.ajax({
                     url: APILink,
                     type: "DELETE",
